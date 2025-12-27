@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans antialiased;
+  }
+}
+
+@layer utilities {
+  .gradient-brand {
+    background: linear-gradient(90deg, rgba(14,167,224,0.85), rgba(86,49,207,0.85));
+  }
+}
+
+@keyframes scrollInfinite {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-scroll-infinite {
+  animation: scrollInfinite 30s linear infinite;
+}
+
