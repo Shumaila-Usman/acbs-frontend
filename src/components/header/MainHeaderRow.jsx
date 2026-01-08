@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Menu, Heart, ShoppingBasket, X } from 'lucide-react';
+import { Search, Menu, Heart, ShoppingBasket, X, Menu as MenuIcon, User } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 import RegisterDropdown from './RegisterDropdown';
 
 const MainHeaderRow = ({ onMobileMenuToggle }) => {
+  const { user, isAuthenticated } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const [isBasketOpen, setIsBasketOpen] = useState(false);
@@ -12,8 +14,10 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
   const [isMobileBasketDrawer, setIsMobileBasketDrawer] = useState(false);
   const [isMobileWishlistHover, setIsMobileWishlistHover] = useState(false);
   const [isMobileBasketHover, setIsMobileBasketHover] = useState(false);
+  const [isPagesMenuOpen, setIsPagesMenuOpen] = useState(false);
   const wishlistRef = useRef(null);
   const basketRef = useRef(null);
+  const pagesMenuRef = useRef(null);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -27,6 +31,9 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
       }
       if (basketRef.current && !basketRef.current.contains(event.target)) {
         setIsBasketOpen(false);
+      }
+      if (pagesMenuRef.current && !pagesMenuRef.current.contains(event.target)) {
+        setIsPagesMenuOpen(false);
       }
     };
 
@@ -86,8 +93,7 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
             <div ref={wishlistRef} className="relative">
               <button 
                 className="p-2 hover:bg-gray-100 rounded-lg transition-colors group"
-                onMouseEnter={() => setIsWishlistOpen(true)}
-                onMouseLeave={() => setIsWishlistOpen(false)}
+                onClick={() => setIsWishlistOpen(!isWishlistOpen)}
               >
                 <Heart 
                   size={24} 
@@ -99,24 +105,51 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
               {isWishlistOpen && (
                 <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-lg shadow-2xl border border-gray-200 overflow-hidden z-50">
                   <div className="p-6">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">My Lists</h3>
-                    <p className="text-gray-600 mb-6">Sign in to organize and share your saved products.</p>
-                    <div className="flex flex-col gap-3">
-                      <Link
-                        to="/login"
-                        className="py-3 px-4 text-center font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
-                        onClick={() => setIsWishlistOpen(false)}
-                      >
-                        Sign In
-                      </Link>
-                      <Link
-                        to="/register"
-                        className="py-3 px-4 text-center font-semibold border-2 border-transparent hover:border-brand-light text-gray-900 rounded-lg transition-colors"
-                        onClick={() => setIsWishlistOpen(false)}
-                      >
-                        Create Account
-                      </Link>
-                    </div>
+                    {isAuthenticated && user ? (
+                      <>
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className="p-2 gradient-brand rounded-full text-white">
+                            <User size={20} />
+                          </div>
+                          <div>
+                            <h3 className="text-lg font-bold text-gray-900">{user.name}</h3>
+                            <p className="text-sm text-gray-600">{user.email}</p>
+                          </div>
+                        </div>
+                        <div className="bg-brand-light/10 p-4 rounded-lg mb-4">
+                          <p className="text-gray-700 font-medium">Your wishlist is ready!</p>
+                          <p className="text-sm text-gray-600 mt-1">Save your favorite items here.</p>
+                        </div>
+                        <Link
+                          to="/account"
+                          className="block py-3 px-4 text-center font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
+                          onClick={() => setIsWishlistOpen(false)}
+                        >
+                          View My Account
+                        </Link>
+                      </>
+                    ) : (
+                      <>
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">My Lists</h3>
+                        <p className="text-gray-600 mb-6">Sign in to organize and share your saved products.</p>
+                        <div className="flex flex-col gap-3">
+                          <Link
+                            to="/login"
+                            className="py-3 px-4 text-center font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
+                            onClick={() => setIsWishlistOpen(false)}
+                          >
+                            Sign In
+                          </Link>
+                          <Link
+                            to="/register"
+                            className="py-3 px-4 text-center font-semibold border-2 border-transparent hover:border-brand-light text-gray-900 rounded-lg transition-colors"
+                            onClick={() => setIsWishlistOpen(false)}
+                          >
+                            Create Account
+                          </Link>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               )}
@@ -126,8 +159,7 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
             <div ref={basketRef} className="relative">
               <button 
                 className="p-2 hover:bg-gray-100 rounded-lg transition-colors group"
-                onMouseEnter={() => setIsBasketOpen(true)}
-                onMouseLeave={() => setIsBasketOpen(false)}
+                onClick={() => setIsBasketOpen(!isBasketOpen)}
               >
                 <ShoppingBasket 
                   size={24} 
@@ -139,28 +171,101 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
               {isBasketOpen && (
                 <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-lg shadow-2xl border border-gray-200 overflow-hidden z-50">
                   <div className="p-6">
-                    <h3 className="text-xl font-bold text-gray-900 mb-4">Basket</h3>
-                    <p className="text-center text-gray-900 font-medium mb-6">Sign in to see items you may have added previously.</p>
-                    <div className="flex flex-col gap-3 mb-4">
-                      <Link
-                        to="/login"
-                        className="py-3 px-4 text-center font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
-                        onClick={() => setIsBasketOpen(false)}
-                      >
-                        Sign In
-                      </Link>
-                      <Link
-                        to="/register"
-                        className="py-3 px-4 text-center font-semibold border-2 border-transparent hover:border-brand-light text-gray-900 rounded-lg transition-colors"
-                        onClick={() => setIsBasketOpen(false)}
-                      >
-                        Create Account
-                      </Link>
-                    </div>
-                    <div className="pt-4 border-t border-gray-200 flex items-center gap-2 text-sm text-gray-600">
-                      <ShoppingBasket size={18} />
-                      <span>See samples, rewards, and promos in <Link to="/basket" className="text-brand-light hover:underline">basket</Link>.</span>
-                    </div>
+                    {isAuthenticated && user ? (
+                      <>
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className="p-2 gradient-brand rounded-full text-white">
+                            <User size={20} />
+                          </div>
+                          <div>
+                            <h3 className="text-lg font-bold text-gray-900">{user.name}</h3>
+                            <p className="text-sm text-gray-600">{user.email}</p>
+                          </div>
+                        </div>
+                        <div className="bg-green-50 p-4 rounded-lg mb-4">
+                          <p className="text-gray-700 font-medium">Welcome back, {user.name.split(' ')[0]}! 👋</p>
+                          <p className="text-sm text-gray-600 mt-1">Your basket is ready for shopping.</p>
+                        </div>
+                        <div className="pt-4 border-t border-gray-200 mb-4 flex items-center gap-2 text-sm text-gray-600">
+                          <ShoppingBasket size={18} />
+                          <span>See samples, rewards, and promos in <Link to="/basket" className="text-brand-light hover:underline">basket</Link>.</span>
+                        </div>
+                        <Link
+                          to="/account"
+                          className="block py-3 px-4 text-center font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
+                          onClick={() => setIsBasketOpen(false)}
+                        >
+                          View My Account
+                        </Link>
+                      </>
+                    ) : (
+                      <>
+                        <h3 className="text-xl font-bold text-gray-900 mb-4">Basket</h3>
+                        <p className="text-center text-gray-900 font-medium mb-6">Sign in to see items you may have added previously.</p>
+                        <div className="flex flex-col gap-3 mb-4">
+                          <Link
+                            to="/login"
+                            className="py-3 px-4 text-center font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
+                            onClick={() => setIsBasketOpen(false)}
+                          >
+                            Sign In
+                          </Link>
+                          <Link
+                            to="/register"
+                            className="py-3 px-4 text-center font-semibold border-2 border-transparent hover:border-brand-light text-gray-900 rounded-lg transition-colors"
+                            onClick={() => setIsBasketOpen(false)}
+                          >
+                            Create Account
+                          </Link>
+                        </div>
+                        <div className="pt-4 border-t border-gray-200 flex items-center gap-2 text-sm text-gray-600">
+                          <ShoppingBasket size={18} />
+                          <span>See samples, rewards, and promos in <Link to="/basket" className="text-brand-light hover:underline">basket</Link>.</span>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Hamburger Pages Menu */}
+            <div ref={pagesMenuRef} className="relative">
+              <button 
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors group"
+                onClick={() => setIsPagesMenuOpen(!isPagesMenuOpen)}
+              >
+                <MenuIcon 
+                  size={24} 
+                  className={`transition-all ${isPagesMenuOpen ? 'text-brand-light' : 'text-gray-700'}`}
+                />
+              </button>
+
+              {/* Pages Dropdown */}
+              {isPagesMenuOpen && (
+                <div className="absolute right-0 top-full mt-2 w-64 bg-white rounded-lg shadow-2xl border border-gray-200 overflow-hidden z-50">
+                  <div className="py-2">
+                    <Link
+                      to="/about"
+                      className="block px-6 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand-light transition-colors font-medium"
+                      onClick={() => setIsPagesMenuOpen(false)}
+                    >
+                      About Us
+                    </Link>
+                    <Link
+                      to="/contact"
+                      className="block px-6 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand-light transition-colors font-medium"
+                      onClick={() => setIsPagesMenuOpen(false)}
+                    >
+                      Contact
+                    </Link>
+                    <Link
+                      to="/faq"
+                      className="block px-6 py-3 text-gray-700 hover:bg-gray-50 hover:text-brand-light transition-colors font-medium"
+                      onClick={() => setIsPagesMenuOpen(false)}
+                    >
+                      FAQ
+                    </Link>
                   </div>
                 </div>
               )}
@@ -247,23 +352,50 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
                 <X size={24} />
               </button>
             </div>
-            <p className="text-gray-600 mb-6">Sign in to organize and share your saved products.</p>
-            <div className="flex flex-col gap-3">
-              <Link
-                to="/login"
-                className="py-3 px-4 text-center font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
-                onClick={() => setIsMobileWishlistDrawer(false)}
-              >
-                Sign In
-              </Link>
-              <Link
-                to="/register"
-                className="py-3 px-4 text-center font-semibold border-2 border-transparent hover:border-brand-light text-gray-900 rounded-lg transition-colors"
-                onClick={() => setIsMobileWishlistDrawer(false)}
-              >
-                Create Account
-              </Link>
-            </div>
+            {isAuthenticated && user ? (
+              <>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 gradient-brand rounded-full text-white">
+                    <User size={20} />
+                  </div>
+                  <div>
+                    <p className="font-bold text-gray-900">{user.name}</p>
+                    <p className="text-xs text-gray-600">{user.email}</p>
+                  </div>
+                </div>
+                <div className="bg-brand-light/10 p-4 rounded-lg mb-4">
+                  <p className="text-gray-700 font-medium">Your wishlist is ready!</p>
+                  <p className="text-sm text-gray-600 mt-1">Save your favorite items here.</p>
+                </div>
+                <Link
+                  to="/account"
+                  className="block py-3 px-4 text-center font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
+                  onClick={() => setIsMobileWishlistDrawer(false)}
+                >
+                  View My Account
+                </Link>
+              </>
+            ) : (
+              <>
+                <p className="text-gray-600 mb-6">Sign in to organize and share your saved products.</p>
+                <div className="flex flex-col gap-3">
+                  <Link
+                    to="/login"
+                    className="py-3 px-4 text-center font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
+                    onClick={() => setIsMobileWishlistDrawer(false)}
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    to="/register"
+                    className="py-3 px-4 text-center font-semibold border-2 border-transparent hover:border-brand-light text-gray-900 rounded-lg transition-colors"
+                    onClick={() => setIsMobileWishlistDrawer(false)}
+                  >
+                    Create Account
+                  </Link>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </>
@@ -287,27 +419,58 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
                 <X size={24} />
               </button>
             </div>
-            <p className="text-center text-gray-900 font-medium mb-6">Sign in to see items you may have added previously.</p>
-            <div className="flex flex-col gap-3 mb-4">
-              <Link
-                to="/login"
-                className="py-3 px-4 text-center font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
-                onClick={() => setIsMobileBasketDrawer(false)}
-              >
-                Sign In
-              </Link>
-              <Link
-                to="/register"
-                className="py-3 px-4 text-center font-semibold border-2 border-transparent hover:border-brand-light text-gray-900 rounded-lg transition-colors"
-                onClick={() => setIsMobileBasketDrawer(false)}
-              >
-                Create Account
-              </Link>
-            </div>
-            <div className="pt-4 border-t border-gray-200 flex items-center gap-2 text-sm text-gray-600">
-              <ShoppingBasket size={18} />
-              <span>See samples, rewards, and promos in <Link to="/basket" className="text-brand-light hover:underline">basket</Link>.</span>
-            </div>
+            {isAuthenticated && user ? (
+              <>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 gradient-brand rounded-full text-white">
+                    <User size={20} />
+                  </div>
+                  <div>
+                    <p className="font-bold text-gray-900">{user.name}</p>
+                    <p className="text-xs text-gray-600">{user.email}</p>
+                  </div>
+                </div>
+                <div className="bg-green-50 p-4 rounded-lg mb-4">
+                  <p className="text-gray-700 font-medium">Welcome back, {user.name.split(' ')[0]}! 👋</p>
+                  <p className="text-sm text-gray-600 mt-1">Your basket is ready for shopping.</p>
+                </div>
+                <div className="pt-4 border-t border-gray-200 mb-4 flex items-center gap-2 text-sm text-gray-600">
+                  <ShoppingBasket size={18} />
+                  <span>See samples, rewards, and promos in <Link to="/basket" className="text-brand-light hover:underline">basket</Link>.</span>
+                </div>
+                <Link
+                  to="/account"
+                  className="block py-3 px-4 text-center font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
+                  onClick={() => setIsMobileBasketDrawer(false)}
+                >
+                  View My Account
+                </Link>
+              </>
+            ) : (
+              <>
+                <p className="text-center text-gray-900 font-medium mb-6">Sign in to see items you may have added previously.</p>
+                <div className="flex flex-col gap-3 mb-4">
+                  <Link
+                    to="/login"
+                    className="py-3 px-4 text-center font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
+                    onClick={() => setIsMobileBasketDrawer(false)}
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    to="/register"
+                    className="py-3 px-4 text-center font-semibold border-2 border-transparent hover:border-brand-light text-gray-900 rounded-lg transition-colors"
+                    onClick={() => setIsMobileBasketDrawer(false)}
+                  >
+                    Create Account
+                  </Link>
+                </div>
+                <div className="pt-4 border-t border-gray-200 flex items-center gap-2 text-sm text-gray-600">
+                  <ShoppingBasket size={18} />
+                  <span>See samples, rewards, and promos in <Link to="/basket" className="text-brand-light hover:underline">basket</Link>.</span>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </>

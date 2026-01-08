@@ -1,0 +1,68 @@
+===============================================
+ABOUT US PAGE - IMAGE PLACEMENT GUIDE
+===============================================
+
+Please add the following images to this folder (public/about/):
+
+1. salon-workspace.jpg
+   - Description: Professional beauty salon workspace image
+   - Location: Displays below "Our Mission & Our Vision" section
+   - Recommended size: 1920x1080px or similar landscape format
+   - This is the black and white salon interior image you showed
+
+2. samira-farooq.jpg
+   - Description: Professional photo of Samira Farooq (Founder)
+   - Location: "Samira Farooq" founder section
+   - Recommended size: 600x800px portrait format
+   - Currently using: /logo.jpg (placeholder)
+
+3. natasha-kowalski.jpg
+   - Description: Professional photo of Natasha Kowalski
+   - Location: "Meet the Experts" section
+   - Recommended size: 600x800px portrait format
+   - Currently using: /logo.jpg (placeholder)
+
+4. ammara-ferwa.jpg
+   - Description: Professional photo of Ammara Ferwa
+   - Location: "Meet the Experts" section
+   - Recommended size: 600x800px portrait format
+   - Currently using: /logo.jpg (placeholder)
+
+===============================================
+4-CARD SECTION IMAGES (Required)
+===============================================
+The "Why Beauty Pros Choose Allied PRO" section has 4 cards.
+Add these images to this folder:
+
+5. card1-pro-grade-products.jpg
+   - Description: Beauty products, skincare items, tools
+   - Displays in: Card 1 - Pro-Grade Products
+   - Recommended size: 800x600px landscape format
+
+6. card2-trusted-experts.jpg
+   - Description: Professional tools, implements, or experts at work
+   - Displays in: Card 2 - Trusted Industry Experts
+   - Recommended size: 800x600px landscape format
+
+7. card3-wide-selection.jpg
+   - Description: Variety of beauty supplies, product range
+   - Displays in: Card 3 - Wide Selection
+   - Recommended size: 800x600px landscape format
+
+8. card4-business-support.jpg
+   - Description: Customer service, consultation, or salon setting
+   - Displays in: Card 4 - Business Support
+   - Recommended size: 800x600px landscape format
+
+===============================================
+HOW TO UPDATE IMAGES IN THE CODE
+===============================================
+To change image sources, edit: src/pages/AboutUs.jsx
+
+Search for the image paths and replace them with your new image names.
+Example:
+  Old: src="/logo.jpg"
+  New: src="/about/samira-farooq.jpg"
+
+===============================================
+

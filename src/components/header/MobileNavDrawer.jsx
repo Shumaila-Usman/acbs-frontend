@@ -131,6 +131,24 @@ const MobileNavDrawer = ({ isOpen, onClose }) => {
           >
             Sale & Offers
           </Link>
+
+          {/* About */}
+          <Link
+            to="/about"
+            onClick={onClose}
+            className="block px-4 py-3 font-semibold text-gray-900 hover:bg-gray-50 transition-colors"
+          >
+            About
+          </Link>
+
+          {/* Contact */}
+          <Link
+            to="/contact"
+            onClick={onClose}
+            className="block px-4 py-3 font-semibold text-gray-900 hover:bg-gray-50 transition-colors"
+          >
+            Contact
+          </Link>
         </div>
       </div>
     </>
