@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CheckCircle, XCircle, Briefcase } from 'lucide-react';
 import api from '../utils/api';
+import { useAuth } from '../context/AuthContext';
 import ScrollAnimation from '../components/ScrollAnimation';
 
 const DealerRegister = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     // Business Details
     companyName: '',
@@ -127,10 +129,21 @@ const DealerRegister = () => {
         setDealerId(response.data.dealerId);
         setShowSuccess(true);
         
-        // Auto-redirect after 5 seconds
-        setTimeout(() => {
-          navigate('/dealer-portal');
-        }, 5000);
+        // Automatically log in the dealer
+        try {
+          await login(formData.email, formData.password);
+          
+          // Auto-redirect after 3 seconds
+          setTimeout(() => {
+            navigate('/dealer-portal');
+          }, 3000);
+        } catch (loginError) {
+          console.error('Auto-login failed:', loginError);
+          // If auto-login fails, redirect to login page
+          setTimeout(() => {
+            navigate('/dealer-login');
+          }, 3000);
+        }
       } else {
         setError(response.data.message || 'Registration failed');
       }
@@ -154,20 +167,21 @@ const DealerRegister = () => {
               Registration Successful!
             </h1>
             <p className="text-gray-600 mb-6">
-              Your dealer account has been created successfully.
+              Your dealer account has been created successfully and you're being logged in automatically.
             </p>
             <div className="bg-gray-50 rounded-lg p-6 mb-6">
               <p className="text-sm text-gray-600 mb-2">Your Dealer ID:</p>
               <p className="text-2xl font-bold text-brand-light mb-2">{dealerId}</p>
               <p className="text-sm text-gray-500">
-                Please save this ID. You'll need it to login.
+                This ID has been saved to your account. You can find it in your profile.
               </p>
             </div>
             <p className="text-sm text-gray-600 mb-4">
               An email has been sent to <strong>{formData.email}</strong> with your dealer ID and login instructions.
             </p>
-            <p className="text-xs text-gray-500">
-              Redirecting to login page in 5 seconds...
+            <p className="text-xs text-gray-500 flex items-center justify-center gap-2">
+              <span className="inline-block w-2 h-2 bg-brand-light rounded-full animate-pulse"></span>
+              Redirecting to dealer portal...
             </p>
           </div>
         </ScrollAnimation>
