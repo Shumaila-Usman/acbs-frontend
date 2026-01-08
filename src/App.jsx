@@ -13,6 +13,7 @@ import DealerPortal from './pages/DealerPortal';
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
 import FAQ from './pages/FAQ';
+import ComingSoon from './pages/ComingSoon';
 
 function App() {
   return (
@@ -33,6 +34,18 @@ function App() {
               <Route path="/about" element={<AboutUs />} />
               <Route path="/contact" element={<ContactUs />} />
               <Route path="/faq" element={<FAQ />} />
+              
+              {/* Placeholder pages - Coming Soon */}
+              <Route path="/careers" element={<ComingSoon pageName="Careers" />} />
+              <Route path="/press" element={<ComingSoon pageName="Press" />} />
+              <Route path="/affiliates" element={<ComingSoon pageName="Affiliates" />} />
+              <Route path="/shipping" element={<ComingSoon pageName="Shipping & Delivery" />} />
+              <Route path="/returns" element={<ComingSoon pageName="Returns & Exchanges" />} />
+              <Route path="/sale" element={<ComingSoon pageName="Sale & Offers" />} />
+              <Route path="/privacy" element={<ComingSoon pageName="Privacy Policy" />} />
+              <Route path="/terms" element={<ComingSoon pageName="Terms of Service" />} />
+              <Route path="/accessibility" element={<ComingSoon pageName="Accessibility" />} />
+              
               {/* Catch-all route for 404 */}
               <Route path="*" element={
                 <div className="min-h-screen flex items-center justify-center px-4">
