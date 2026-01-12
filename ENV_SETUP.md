@@ -33,3 +33,4 @@ After deploying your backend, use that URL for the `VITE_API_URL` variable in Ve
 2. **Restart Dev Server:** After changing `.env.local`, restart `npm run dev`
 3. **Vercel Redeploy:** After adding env variables in Vercel, trigger a new deployment
 
+
