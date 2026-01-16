@@ -27,17 +27,23 @@ const AboutUs = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="gradient-brand text-white py-20 px-4">
-        <div className="max-w-6xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+      <section className="relative gradient-brand text-white py-24 px-4 overflow-hidden">
+        {/* Decorative Background Elements */}
+        <div className="absolute top-0 left-0 w-64 h-64 bg-white opacity-5 rounded-full -translate-x-32 -translate-y-32"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-white opacity-5 rounded-full translate-x-48 translate-y-48"></div>
+        <div className="absolute top-1/2 left-1/4 w-32 h-32 bg-white opacity-5 rounded-full"></div>
+        <div className="absolute top-1/3 right-1/4 w-48 h-48 bg-white opacity-5 rounded-full"></div>
+        
+        <div className="max-w-6xl mx-auto text-center relative z-10">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white">
             About Allied PRO Beauty Supply
           </h1>
-          <p className="text-xl md:text-2xl mb-8 max-w-4xl mx-auto">
-            Empowering Beauty Professionals with Premium Products, Expert Training & Ongoing Support
+          <p className="text-xl md:text-2xl mb-10 max-w-4xl mx-auto leading-relaxed">
+            Everything you need to run the beauty game: top-tier gear, expert coaching, and real support
           </p>
           <Link
             to="/contact"
-            className="inline-block bg-white text-brand-dark px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+            className="inline-block bg-white text-brand-dark px-12 py-5 text-xl rounded-lg font-bold hover:bg-gray-100 transition-all transform hover:scale-105 shadow-xl"
           >
             Contact Us
           </Link>
@@ -81,7 +87,7 @@ const AboutUs = () => {
             Why Beauty Pros Choose Allied PRO
           </h2>
           <p className="text-lg text-gray-700 leading-relaxed max-w-4xl mx-auto text-center mb-12">
-            Beauty pros choose Allied PRO for high-quality products, expert-trusted tools, a wide selection, and reliable support—all in one place.
+            Allied PRO is the ultimate destination for salon-grade products, professional tools, and dedicated business support—all under one roof.
           </p>
 
           {/* 4 Cards Grid */}
@@ -186,7 +192,7 @@ const AboutUs = () => {
             Quality You Can See and Feel
           </h2>
           <p className="text-lg text-gray-700 leading-relaxed max-w-4xl mx-auto text-center">
-            At Allied PRO Beauty Supply, quality isn't just a promise — it's our standard. Every product we offer is thoroughly tested to ensure it meets the high demands of working professionals. Whether it's lash adhesives, brow tools, or skincare essentials, we only carry products we'd trust in our own services.
+            As a leading wholesale beauty distributor, Allied PRO provides the salon-grade products, expert-trusted tools, and reliable business support you need to thrive, all in one place.
           </p>
         </div>
       </section>
@@ -198,22 +204,32 @@ const AboutUs = () => {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Our Mission */}
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-brand-light to-brand-dark bg-clip-text text-transparent">
+            <div className="bg-gradient-to-br from-purple-50 to-blue-50 p-8 rounded-xl shadow-lg">
+              <div className="flex items-center justify-center mb-4">
+                <div className="w-16 h-16 bg-gradient-to-r from-brand-light to-brand-dark rounded-full flex items-center justify-center">
+                  <span className="text-white text-2xl font-bold">M</span>
+                </div>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-brand-light to-brand-dark bg-clip-text text-transparent text-center">
                 Our mission
               </h2>
               <p className="text-lg text-gray-700 leading-relaxed">
-                At Allied Pro Beauty Supply, our mission is to empower beauty professionals with the highest quality products, tools, and support they need to succeed. We strive to be a trusted partner, offering an extensive range of beauty supplies, from the latest industry innovations to reliable essentials, all tailored to meet the unique demands of our clients. Our commitment is to inspire, equip, and support every beauty professional to elevate their craft and build lasting success.
+                To equip every beauty professional with industry-leading tools and premium wholesale supplies. At Allied PRO, we are committed to inspiring your creativity and supporting your business growth with reliable, high-performance products that deliver lasting success for your salon.
               </p>
             </div>
 
             {/* Our Vision */}
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-brand-light to-brand-dark bg-clip-text text-transparent">
+            <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-8 rounded-xl shadow-lg">
+              <div className="flex items-center justify-center mb-4">
+                <div className="w-16 h-16 bg-gradient-to-r from-brand-dark to-brand-light rounded-full flex items-center justify-center">
+                  <span className="text-white text-2xl font-bold">V</span>
+                </div>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-brand-light to-brand-dark bg-clip-text text-transparent text-center">
                 Our vision
               </h2>
               <p className="text-lg text-gray-700 leading-relaxed">
-                At Allied Pro Beauty Supply, our vision is to create a world where every beauty professional has access to the highest quality products and support to achieve their best work. We envision a thriving community of empowered stylists, artists, and creators who can confidently pursue their passion with the finest tools and products at their fingertips. By continually innovating and curating exceptional beauty solutions, we aim to be the trusted partner that helps professionals inspire beauty in themselves and others.
+                To be the premier destination for wholesale beauty innovation, where every professional has the tools and support to redefine industry standards. We envision a global community of empowered stylists and artists growing their businesses with confidence. By curating the finest salon-grade solutions, we aim to be the lifelong partner that helps beauty experts transform their passion into lasting success.
               </p>
             </div>
           </div>
@@ -242,21 +258,47 @@ const AboutUs = () => {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="order-2 lg:order-1">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-brand-light to-brand-dark bg-clip-text text-transparent">
-                Samira Farooq
-              </h2>
-              <h3 className="text-xl text-brand-light font-semibold mb-6">
-                Founder & CEO
+              <h3 className="text-2xl text-brand-light font-bold mb-2">
+                Founder & CEO: Samira Farooq
               </h3>
-              <p className="text-lg text-gray-700 leading-relaxed">
-                The founder of the company has dedicated over 30 years to the aesthetics and beauty industry, building a career defined by passion, expertise, and a commitment to empowering others. Her journey began as a skilled aesthetician, where she quickly earned a reputation for mastering advanced skincare techniques and providing exceptional client care. Over the years, she expanded her expertise to include training and mentoring other beauty professionals, sharing her knowledge to elevate the standards of the industry.
+              <h4 className="text-xl text-gray-600 font-semibold mb-6">
+                30+ Years of Excellence in Aesthetics & Beauty
+              </h4>
+              
+              <div className="bg-blue-50 border-l-4 border-brand-light p-6 rounded-lg mb-6 italic">
+                <p className="text-lg text-gray-800 leading-relaxed">
+                  "My mission is to provide beauty pros with the high-performance tools I wish I had when I started my career."
+                </p>
+                <p className="text-right text-gray-700 font-semibold mt-2">— Samira Farooq</p>
+              </div>
+
+              <p className="text-lg text-gray-700 leading-relaxed mb-4">
+                With over three decades of hands-on experience, Samira Farooq has transitioned from a master aesthetician to a leading wholesale distributor. Her journey is defined by a deep commitment to elevating industry standards through education and premium product sourcing.
               </p>
-              <p className="text-lg text-gray-700 leading-relaxed mt-4">
-                Her experience wasn't just limited to hands-on services. She developed a keen eye for sourcing high-quality products and tools that delivered exceptional results, gaining invaluable insight into the beauty supply market. This expertise, coupled with her passion for supporting beauty professionals, inspired her to take the leap and open a beauty supply store.
-              </p>
-              <p className="text-lg text-gray-700 leading-relaxed mt-4">
-                Today, her business stands as a trusted resource for beauty practitioners, offering top-tier products, expert advice, and a range of educational opportunities. Her dedication to excellence and her deep understanding of the industry continue to drive the store's success, making it a cornerstone for beauty professionals striving to elevate their craft.
-              </p>
+
+              <div className="space-y-4 mt-6">
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-brand-light rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <h5 className="font-bold text-gray-900 mb-1">Expert Sourcing</h5>
+                    <p className="text-gray-700">Leveraging 30 years of insight to curate a catalog of top-tier, salon-tested products.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-brand-light rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <h5 className="font-bold text-gray-900 mb-1">Education Focused</h5>
+                    <p className="text-gray-700">Dedicated to mentoring the next generation of beauty professionals through advanced training.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-brand-light rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <h5 className="font-bold text-gray-900 mb-1">Professional Partnership</h5>
+                    <p className="text-gray-700">Building Allied PRO into a cornerstone resource for practitioners who demand excellence.</p>
+                  </div>
+                </div>
+              </div>
             </div>
             <div className="order-1 lg:order-2">
               <div className="rounded-lg overflow-hidden shadow-xl">
@@ -302,9 +344,32 @@ const AboutUs = () => {
                 <p className="text-lg text-brand-light font-semibold mb-6">
                   Aesthetician & Operations Manager
                 </p>
-                <p className="text-gray-700 leading-relaxed">
-                  Meet Natasha, a dedicated professional with over 15 years of experience in the beauty industry. Starting her career as an aesthetician, Natasha spent more than a decade perfecting her craft and helping clients feel confident and beautiful. Her expertise and passion for the industry have paved the way for her current role as Operations Manager at AlliedPro Beauty Supplies. In her leadership position, Natasha oversees day-to-day operations, ensuring the seamless delivery of products and services to clients. Her hands-on experience as an aesthetician gives her a unique perspective, enabling her to support beauty professionals with the tools and knowledge they need to succeed. Beyond her professional accomplishments, Natasha is passionate about empowering others in the beauty industry and fostering a collaborative environment at AlliedPro. Her journey from aesthetician to operations manager showcases her dedication, growth, and love for the field.
+                <p className="text-gray-700 leading-relaxed mb-4">
+                  With over 15 years of industry experience, Natasha bridges the gap between clinical aesthetics and operational excellence. Having spent a decade as a master aesthetician, she now oversees the seamless delivery of products and support to Allied PRO clients.
                 </p>
+                <div className="space-y-3 mt-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-brand-light rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <h5 className="font-bold text-gray-900">Expert Logistics</h5>
+                      <p className="text-gray-700">Ensures reliable, professional service for every partner.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-brand-light rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <h5 className="font-bold text-gray-900">Pro Perspective</h5>
+                      <p className="text-gray-700">Uses her hands-on background to select the best tools for the trade.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-brand-light rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <h5 className="font-bold text-gray-900">Team Growth</h5>
+                      <p className="text-gray-700">Dedicated to building a collaborative, empowering environment.</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -326,13 +391,46 @@ const AboutUs = () => {
                   Ammara Ferwa
                 </h3>
                 <p className="text-lg text-brand-light font-semibold mb-6">
-                  Sales Specialist & Skincare Expert, Biology BSc
+                  Sales Specialist & Skincare Expert | BSc Biology
                 </p>
-                <p className="text-gray-700 leading-relaxed">
-                  Ammara brings her passion for the science of skincare and exceptional customer service to her role as a Sales Specialist & Skincare Expert at AlliedPro Beauty Supplies. With a Bachelor of Science in Biology, she possesses a deep understanding of how skincare products interact with the skin, enabling her to provide clients with tailored, science-backed recommendations. Her seven years of customer service experience have honed her ability to connect with clients, deliver personalized advice, and create positive experiences. Ammara seamlessly combines her scientific expertise with her customer care skills to ensure clients feel informed and confident in their skincare choices. At AlliedPro, Ammara is dedicated to helping clients discover the best solutions for their skincare needs. Her unique blend of knowledge and experience allows her to foster strong customer relationships while driving sales and supporting the company's mission to empower beauty professionals.
+                <p className="text-gray-700 leading-relaxed mb-4">
+                  With a Bachelor of Science in Biology, Ammara combines the science of skincare with top-tier customer service. She leverages seven years of experience to provide professionals with technical, science-backed product recommendations.
                 </p>
+                <div className="space-y-3 mt-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-brand-light rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <h5 className="font-bold text-gray-900">Scientific Insight</h5>
+                      <p className="text-gray-700">Uses her biology background to explain how products interact with the skin at a cellular level.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-brand-light rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <h5 className="font-bold text-gray-900">Expert Consulting</h5>
+                      <p className="text-gray-700">Seven years of experience in delivering personalized, data-driven skincare solutions.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-brand-light rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <h5 className="font-bold text-gray-900">B2B Relationship Builder</h5>
+                      <p className="text-gray-700">Focused on driving sales through informed, confident client partnerships and ongoing support.</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
+          </div>
+
+          {/* Call to Action Button */}
+          <div className="text-center mt-12">
+            <Link
+              to="/contact"
+              className="inline-block px-12 py-5 text-xl gradient-brand text-white font-bold rounded-lg hover:opacity-90 transition-all transform hover:scale-105 shadow-xl"
+            >
+              Speak with an Expert Today
+            </Link>
           </div>
         </div>
       </section>
@@ -415,7 +513,7 @@ const AboutUs = () => {
                 </div>
                 <button
                   type="submit"
-                  className="w-full py-3 gradient-brand text-white font-semibold rounded-lg hover:opacity-90 transition-opacity"
+                  className="w-full py-5 text-xl gradient-brand text-white font-bold rounded-lg hover:opacity-90 transition-all transform hover:scale-105 shadow-xl"
                 >
                   Submit Your Inquiry
                 </button>

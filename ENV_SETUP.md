@@ -34,3 +34,5 @@ After deploying your backend, use that URL for the `VITE_API_URL` variable in Ve
 3. **Vercel Redeploy:** After adding env variables in Vercel, trigger a new deployment
 
 
+
+

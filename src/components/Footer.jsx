@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
+import { Facebook, Instagram, Youtube } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -11,10 +11,22 @@ const Footer = () => {
           <div>
             <h3 className="text-white font-semibold mb-4">About ACBS</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/about" className="hover:text-white transition-colors">About Us</Link></li>
-              <li><Link to="/careers" className="hover:text-white transition-colors">Careers</Link></li>
-              <li><Link to="/press" className="hover:text-white transition-colors">Press</Link></li>
-              <li><Link to="/affiliates" className="hover:text-white transition-colors">Affiliates</Link></li>
+              <li><Link to="/about" className="relative inline-block hover:text-white transition-colors group">
+                <span>About Us</span>
+                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-gradient-to-r from-brand-light to-brand-dark transition-all duration-300 group-hover:w-full"></span>
+              </Link></li>
+              <li><Link to="/careers" className="relative inline-block hover:text-white transition-colors group">
+                <span>Careers</span>
+                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-gradient-to-r from-brand-light to-brand-dark transition-all duration-300 group-hover:w-full"></span>
+              </Link></li>
+              <li><Link to="/press" className="relative inline-block hover:text-white transition-colors group">
+                <span>Press</span>
+                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-gradient-to-r from-brand-light to-brand-dark transition-all duration-300 group-hover:w-full"></span>
+              </Link></li>
+              <li><Link to="/affiliates" className="relative inline-block hover:text-white transition-colors group">
+                <span>Affiliates</span>
+                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-gradient-to-r from-brand-light to-brand-dark transition-all duration-300 group-hover:w-full"></span>
+              </Link></li>
             </ul>
           </div>
 
@@ -22,10 +34,22 @@ const Footer = () => {
           <div>
             <h3 className="text-white font-semibold mb-4">Customer Service</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
-              <li><Link to="/shipping" className="hover:text-white transition-colors">Shipping & Delivery</Link></li>
-              <li><Link to="/returns" className="hover:text-white transition-colors">Returns & Exchanges</Link></li>
-              <li><Link to="/faq" className="hover:text-white transition-colors">FAQ</Link></li>
+              <li><Link to="/contact" className="relative inline-block hover:text-white transition-colors group">
+                <span>Contact Us</span>
+                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-gradient-to-r from-brand-light to-brand-dark transition-all duration-300 group-hover:w-full"></span>
+              </Link></li>
+              <li><Link to="/shipping" className="relative inline-block hover:text-white transition-colors group">
+                <span>Shipping & Delivery</span>
+                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-gradient-to-r from-brand-light to-brand-dark transition-all duration-300 group-hover:w-full"></span>
+              </Link></li>
+              <li><Link to="/returns" className="relative inline-block hover:text-white transition-colors group">
+                <span>Returns & Exchanges</span>
+                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-gradient-to-r from-brand-light to-brand-dark transition-all duration-300 group-hover:w-full"></span>
+              </Link></li>
+              <li><Link to="/faq" className="relative inline-block hover:text-white transition-colors group">
+                <span>FAQ</span>
+                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-gradient-to-r from-brand-light to-brand-dark transition-all duration-300 group-hover:w-full"></span>
+              </Link></li>
             </ul>
           </div>
 
@@ -33,10 +57,22 @@ const Footer = () => {
           <div>
             <h3 className="text-white font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/account/orders" className="hover:text-white transition-colors">Track Order</Link></li>
-              <li><Link to="/account/rewards" className="hover:text-white transition-colors">Rewards Program</Link></li>
-              <li><Link to="/dealer-register" className="hover:text-white transition-colors">Dealer Portal</Link></li>
-              <li><Link to="/sale" className="hover:text-white transition-colors">Sale & Offers</Link></li>
+              <li><Link to="/account/orders" className="relative inline-block hover:text-white transition-colors group">
+                <span>Track Order</span>
+                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-gradient-to-r from-brand-light to-brand-dark transition-all duration-300 group-hover:w-full"></span>
+              </Link></li>
+              <li><Link to="/account/rewards" className="relative inline-block hover:text-white transition-colors group">
+                <span>Rewards Program</span>
+                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-gradient-to-r from-brand-light to-brand-dark transition-all duration-300 group-hover:w-full"></span>
+              </Link></li>
+              <li><Link to="/dealer-register" className="relative inline-block hover:text-white transition-colors group">
+                <span>Dealer Portal</span>
+                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-gradient-to-r from-brand-light to-brand-dark transition-all duration-300 group-hover:w-full"></span>
+              </Link></li>
+              <li><Link to="/sale" className="relative inline-block hover:text-white transition-colors group">
+                <span>Sale & Offers</span>
+                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-gradient-to-r from-brand-light to-brand-dark transition-all duration-300 group-hover:w-full"></span>
+              </Link></li>
             </ul>
           </div>
 
@@ -58,16 +94,31 @@ const Footer = () => {
               </button>
             </form>
             <div className="flex gap-3">
-              <a href="#" className="hover:text-white transition-colors" aria-label="Facebook">
+              <a 
+                href="https://www.facebook.com/alliedprobeautysupply/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-white transition-all hover:scale-110 transform" 
+                aria-label="Facebook"
+              >
                 <Facebook size={20} />
               </a>
-              <a href="#" className="hover:text-white transition-colors" aria-label="Instagram">
+              <a 
+                href="https://www.instagram.com/alliedpro_beautysupply/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-white transition-all hover:scale-110 transform" 
+                aria-label="Instagram"
+              >
                 <Instagram size={20} />
               </a>
-              <a href="#" className="hover:text-white transition-colors" aria-label="Twitter">
-                <Twitter size={20} />
-              </a>
-              <a href="#" className="hover:text-white transition-colors" aria-label="YouTube">
+              <a 
+                href="https://www.youtube.com/@alliedprobeautysupply" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-white transition-all hover:scale-110 transform" 
+                aria-label="YouTube"
+              >
                 <Youtube size={20} />
               </a>
             </div>
@@ -78,9 +129,18 @@ const Footer = () => {
         <div className="border-t border-gray-800 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
           <p>&copy; 2025 ACBS. All rights reserved.</p>
           <div className="flex gap-6">
-            <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
-            <Link to="/accessibility" className="hover:text-white transition-colors">Accessibility</Link>
+            <Link to="/privacy" className="relative inline-block hover:text-white transition-colors group">
+              <span>Privacy Policy</span>
+              <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-gradient-to-r from-brand-light to-brand-dark transition-all duration-300 group-hover:w-full"></span>
+            </Link>
+            <Link to="/terms" className="relative inline-block hover:text-white transition-colors group">
+              <span>Terms of Service</span>
+              <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-gradient-to-r from-brand-light to-brand-dark transition-all duration-300 group-hover:w-full"></span>
+            </Link>
+            <Link to="/accessibility" className="relative inline-block hover:text-white transition-colors group">
+              <span>Accessibility</span>
+              <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-gradient-to-r from-brand-light to-brand-dark transition-all duration-300 group-hover:w-full"></span>
+            </Link>
           </div>
         </div>
       </div>
