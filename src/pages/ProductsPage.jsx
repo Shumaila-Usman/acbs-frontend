@@ -5,6 +5,7 @@ import axios from 'axios';
 import ScrollAnimation from '../components/ScrollAnimation';
 import ProductQuickView from '../components/ProductQuickView';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 
 // Dynamically determine API URL based on current host
 const getApiUrl = () => {
@@ -17,7 +18,7 @@ const getApiUrl = () => {
 
 const API_URL = getApiUrl();
 
-const ProductCard = ({ product, viewMode, onQuickView }) => {
+const ProductCard = ({ product, viewMode, onQuickView, isDealer }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
   const { addToCart, isInWishlist, toggleWishlist } = useCart();
@@ -80,37 +81,45 @@ const ProductCard = ({ product, viewMode, onQuickView }) => {
           
           {/* Price and Actions */}
           <div className="flex items-center justify-between mt-3 gap-2">
-            <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] bg-clip-text text-transparent">
-              ${product.price.toFixed(2)}
-            </span>
+            {isDealer ? (
+              <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] bg-clip-text text-transparent">
+                ${product.price.toFixed(2)}
+              </span>
+            ) : (
+              <span className="text-sm text-gray-500 italic">Login as dealer to see price</span>
+            )}
             <div className="flex gap-1 sm:gap-2">
-              <button 
-                onClick={handleWishlist}
-                className={`p-2 border rounded-lg transition-colors ${
-                  isWishlisted 
-                    ? 'border-red-500 text-red-500 bg-red-50' 
-                    : 'border-gray-200 hover:border-[#0ea7e0] hover:text-[#0ea7e0]'
-                }`}
-              >
-                <Heart size={18} className={isWishlisted ? 'fill-red-500' : ''} />
-              </button>
+              {isDealer && (
+                <button 
+                  onClick={handleWishlist}
+                  className={`p-2 border rounded-lg transition-colors ${
+                    isWishlisted 
+                      ? 'border-red-500 text-red-500 bg-red-50' 
+                      : 'border-gray-200 hover:border-[#0ea7e0] hover:text-[#0ea7e0]'
+                  }`}
+                >
+                  <Heart size={18} className={isWishlisted ? 'fill-red-500' : ''} />
+                </button>
+              )}
               <button 
                 onClick={handleQuickView}
                 className="p-2 border border-gray-200 rounded-lg hover:border-[#0ea7e0] hover:text-[#0ea7e0] transition-colors"
               >
                 <Eye size={18} />
               </button>
-              <button 
-                onClick={handleAddToCart}
-                className={`px-3 sm:px-4 py-2 rounded-lg transition-all flex items-center gap-1 sm:gap-2 text-sm sm:text-base ${
-                  addedToCart 
-                    ? 'bg-green-500 text-white' 
-                    : 'gradient-brand text-white hover:opacity-90'
-                }`}
-              >
-                {addedToCart ? <Check size={16} /> : <ShoppingCart size={16} />}
-                <span className="hidden sm:inline">{addedToCart ? 'Added!' : 'Add to Cart'}</span>
-              </button>
+              {isDealer && (
+                <button 
+                  onClick={handleAddToCart}
+                  className={`px-3 sm:px-4 py-2 rounded-lg transition-all flex items-center gap-1 sm:gap-2 text-sm sm:text-base ${
+                    addedToCart 
+                      ? 'bg-green-500 text-white' 
+                      : 'gradient-brand text-white hover:opacity-90'
+                  }`}
+                >
+                  {addedToCart ? <Check size={16} /> : <ShoppingCart size={16} />}
+                  <span className="hidden sm:inline">{addedToCart ? 'Added!' : 'Add to Cart'}</span>
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -145,25 +154,29 @@ const ProductCard = ({ product, viewMode, onQuickView }) => {
         
         {/* Quick Action Icons - Vertical on right side */}
         <div className={`absolute top-3 right-3 flex flex-col gap-2 transition-all duration-300 ${isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}>
-          {/* Wishlist/Heart */}
-          <button 
-            onClick={handleWishlist}
-            className={`p-2.5 rounded-full shadow-lg transition-all duration-200 ${
-              isWishlisted 
-                ? 'bg-red-500 text-white' 
-                : 'bg-white hover:bg-[#0ea7e0] hover:text-white'
-            }`}
-          >
-            <Heart size={18} className={isWishlisted ? 'fill-white' : ''} />
-          </button>
+          {/* Wishlist/Heart - Only for Dealers */}
+          {isDealer && (
+            <button 
+              onClick={handleWishlist}
+              className={`p-2.5 rounded-full shadow-lg transition-all duration-200 ${
+                isWishlisted 
+                  ? 'bg-red-500 text-white' 
+                  : 'bg-white hover:bg-[#0ea7e0] hover:text-white'
+              }`}
+            >
+              <Heart size={18} className={isWishlisted ? 'fill-white' : ''} />
+            </button>
+          )}
           
-          {/* Add to Cart/Basket */}
-          <button 
-            onClick={handleAddToCart}
-            className="p-2.5 bg-white rounded-full shadow-lg hover:bg-[#0ea7e0] hover:text-white transition-all duration-200"
-          >
-            <ShoppingCart size={18} />
-          </button>
+          {/* Add to Cart/Basket - Only for Dealers */}
+          {isDealer && (
+            <button 
+              onClick={handleAddToCart}
+              className="p-2.5 bg-white rounded-full shadow-lg hover:bg-[#0ea7e0] hover:text-white transition-all duration-200"
+            >
+              <ShoppingCart size={18} />
+            </button>
+          )}
           
           {/* Quick View/Eye */}
           <button 
@@ -174,20 +187,22 @@ const ProductCard = ({ product, viewMode, onQuickView }) => {
           </button>
         </div>
         
-        {/* Add to Cart Button at Bottom */}
-        <div className={`absolute bottom-0 left-0 right-0 p-4 transition-all duration-300 ${isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          <button 
-            onClick={handleAddToCart}
-            className={`w-full py-3 font-semibold rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg ${
-              addedToCart 
-                ? 'bg-green-500 text-white' 
-                : 'gradient-brand text-white hover:opacity-90'
-            }`}
-          >
-            {addedToCart ? <Check size={18} /> : <ShoppingCart size={18} />}
-            {addedToCart ? 'Added to Cart!' : 'Add to Cart'}
-          </button>
-        </div>
+        {/* Add to Cart Button at Bottom - Only for Dealers */}
+        {isDealer && (
+          <div className={`absolute bottom-0 left-0 right-0 p-4 transition-all duration-300 ${isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            <button 
+              onClick={handleAddToCart}
+              className={`w-full py-3 font-semibold rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg ${
+                addedToCart 
+                  ? 'bg-green-500 text-white' 
+                  : 'gradient-brand text-white hover:opacity-90'
+              }`}
+            >
+              {addedToCart ? <Check size={18} /> : <ShoppingCart size={18} />}
+              {addedToCart ? 'Added to Cart!' : 'Add to Cart'}
+            </button>
+          </div>
+        )}
       </div>
       
       <div className="p-4">
@@ -199,9 +214,13 @@ const ProductCard = ({ product, viewMode, onQuickView }) => {
         </h3>
         <p className="text-gray-600 text-sm line-clamp-2 mb-3">{product.description}</p>
         <div className="flex items-center justify-between">
-          <span className="text-xl font-bold bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] bg-clip-text text-transparent">
-            ${product.price.toFixed(2)}
-          </span>
+          {isDealer ? (
+            <span className="text-xl font-bold bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] bg-clip-text text-transparent">
+              ${product.price.toFixed(2)}
+            </span>
+          ) : (
+            <span className="text-sm text-gray-500 italic">Login as dealer for pricing</span>
+          )}
         </div>
       </div>
     </div>
@@ -212,6 +231,7 @@ const ProductsPage = () => {
   const { categoryId, subcategoryId } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const searchQuery = searchParams.get('search') || '';
+  const { isDealer } = useAuth();
   
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -566,6 +586,7 @@ const ProductsPage = () => {
                       product={product} 
                       viewMode={viewMode} 
                       onQuickView={handleQuickView}
+                      isDealer={isDealer}
                     />
                   </ScrollAnimation>
                 ))}

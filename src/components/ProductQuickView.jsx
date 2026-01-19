@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { X, Heart, Share2, ShoppingCart, ChevronLeft, ChevronRight, Star, Plus, Minus, Check } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 
 const ProductQuickView = ({ product, isOpen, onClose }) => {
   const [quantity, setQuantity] = useState(1);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [addedToCart, setAddedToCart] = useState(false);
   const { addToCart, addToWishlist, isInWishlist, toggleWishlist } = useCart();
+  const { isDealer } = useAuth();
 
   const isWishlisted = product ? isInWishlist(product.productId || product._id) : false;
 
@@ -145,15 +147,17 @@ const ProductQuickView = ({ product, isOpen, onClose }) => {
                 <Share2 size={16} />
                 SHARE
               </button>
-              <button 
-                onClick={() => toggleWishlist(product)}
-                className={`flex items-center gap-2 transition-colors ${
-                  isWishlisted ? 'text-red-500' : 'text-gray-600 hover:text-red-500'
-                }`}
-              >
-                <Heart size={16} className={isWishlisted ? 'fill-red-500' : ''} />
-                {isWishlisted ? 'IN WISHLIST' : 'ADD TO WISHLIST'}
-              </button>
+              {isDealer && (
+                <button 
+                  onClick={() => toggleWishlist(product)}
+                  className={`flex items-center gap-2 transition-colors ${
+                    isWishlisted ? 'text-red-500' : 'text-gray-600 hover:text-red-500'
+                  }`}
+                >
+                  <Heart size={16} className={isWishlisted ? 'fill-red-500' : ''} />
+                  {isWishlisted ? 'IN WISHLIST' : 'ADD TO WISHLIST'}
+                </button>
+              )}
             </div>
 
             {/* Description */}
@@ -166,65 +170,74 @@ const ProductQuickView = ({ product, isOpen, onClose }) => {
               </p>
             </div>
 
-            {/* Price */}
-            <div className="flex items-baseline gap-3 mb-6">
-              <span className="text-3xl font-bold bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] bg-clip-text text-transparent">
-                ${product.price.toFixed(2)}
-              </span>
-              {product.price > 50 && (
-                <span className="text-lg text-gray-400 line-through">
-                  ${(product.price * 1.3).toFixed(2)}
+            {/* Price - Only for Dealers */}
+            {isDealer ? (
+              <div className="flex items-baseline gap-3 mb-6">
+                <span className="text-3xl font-bold bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] bg-clip-text text-transparent">
+                  ${product.price.toFixed(2)}
                 </span>
-              )}
-            </div>
-
-            {/* Quantity & Add to Cart */}
-            <div className="flex items-center gap-4 mb-6">
-              <div className="flex items-center">
-                <span className="text-gray-600 mr-3">QTY</span>
-                <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
-                  <button 
-                    onClick={() => handleQuantityChange(-1)}
-                    className="px-3 py-2 hover:bg-gray-100 transition-colors"
-                  >
-                    <Minus size={16} />
-                  </button>
-                  <span className="px-4 py-2 border-x border-gray-300 min-w-[50px] text-center">
-                    {quantity}
+                {product.price > 50 && (
+                  <span className="text-lg text-gray-400 line-through">
+                    ${(product.price * 1.3).toFixed(2)}
                   </span>
-                  <button 
-                    onClick={() => handleQuantityChange(1)}
-                    className="px-3 py-2 hover:bg-gray-100 transition-colors"
-                  >
-                    <Plus size={16} />
-                  </button>
-                </div>
-              </div>
-              
-              <button 
-                onClick={() => {
-                  addToCart(product, quantity);
-                  setAddedToCart(true);
-                }}
-                className={`flex-1 py-3 px-6 font-semibold rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg ${
-                  addedToCart 
-                    ? 'bg-green-500 text-white' 
-                    : 'gradient-brand text-white hover:opacity-90'
-                }`}
-              >
-                {addedToCart ? (
-                  <>
-                    <Check size={20} />
-                    ADDED TO CART!
-                  </>
-                ) : (
-                  <>
-                    <ShoppingCart size={20} />
-                    ADD TO CART
-                  </>
                 )}
-              </button>
-            </div>
+              </div>
+            ) : (
+              <div className="mb-6 p-4 bg-gradient-to-r from-[#0ea7e0]/10 to-[#5631cf]/10 rounded-lg">
+                <p className="text-gray-700 font-medium">💼 Dealer Pricing Available</p>
+                <p className="text-sm text-gray-500">Register as a dealer to see prices and place orders</p>
+              </div>
+            )}
+
+            {/* Quantity & Add to Cart - Only for Dealers */}
+            {isDealer && (
+              <div className="flex items-center gap-4 mb-6">
+                <div className="flex items-center">
+                  <span className="text-gray-600 mr-3">QTY</span>
+                  <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                    <button 
+                      onClick={() => handleQuantityChange(-1)}
+                      className="px-3 py-2 hover:bg-gray-100 transition-colors"
+                    >
+                      <Minus size={16} />
+                    </button>
+                    <span className="px-4 py-2 border-x border-gray-300 min-w-[50px] text-center">
+                      {quantity}
+                    </span>
+                    <button 
+                      onClick={() => handleQuantityChange(1)}
+                      className="px-3 py-2 hover:bg-gray-100 transition-colors"
+                    >
+                      <Plus size={16} />
+                    </button>
+                  </div>
+                </div>
+                
+                <button 
+                  onClick={() => {
+                    addToCart(product, quantity);
+                    setAddedToCart(true);
+                  }}
+                  className={`flex-1 py-3 px-6 font-semibold rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg ${
+                    addedToCart 
+                      ? 'bg-green-500 text-white' 
+                      : 'gradient-brand text-white hover:opacity-90'
+                  }`}
+                >
+                  {addedToCart ? (
+                    <>
+                      <Check size={20} />
+                      ADDED TO CART!
+                    </>
+                  ) : (
+                    <>
+                      <ShoppingCart size={20} />
+                      ADD TO CART
+                    </>
+                  )}
+                </button>
+              </div>
+            )}
 
             {/* Additional Info */}
             <div className="border-t border-gray-200 pt-6 space-y-3">

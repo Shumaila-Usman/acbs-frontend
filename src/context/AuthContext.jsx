@@ -80,6 +80,9 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Check if user is a dealer
+  const isDealer = user?.role === 'dealer' || user?.isDealer === true;
+
   return (
     <AuthContext.Provider 
       value={{ 
@@ -89,7 +92,8 @@ export const AuthProvider = ({ children }) => {
         register, 
         login, 
         logout,
-        checkAuth 
+        checkAuth,
+        isDealer
       }}
     >
       {children}

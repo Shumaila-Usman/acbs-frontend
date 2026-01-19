@@ -15,6 +15,7 @@ import ContactUs from './pages/ContactUs';
 import FAQ from './pages/FAQ';
 import ComingSoon from './pages/ComingSoon';
 import ProductsPage from './pages/ProductsPage';
+import CheckoutPage from './pages/CheckoutPage';
 
 function App() {
   return (
@@ -43,6 +44,9 @@ function App() {
               <Route path="/products/:categoryId/:subcategoryId" element={<ProductsPage />} />
               <Route path="/category/:categoryId" element={<ProductsPage />} />
               <Route path="/category/:categoryId/:subcategoryId" element={<ProductsPage />} />
+              
+              {/* Checkout - Dealers Only */}
+              <Route path="/checkout" element={<CheckoutPage />} />
               
               {/* Placeholder pages - Coming Soon */}
               <Route path="/careers" element={<ComingSoon pageName="Careers" />} />
