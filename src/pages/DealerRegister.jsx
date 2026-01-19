@@ -133,16 +133,16 @@ const DealerRegister = () => {
         try {
           await login(formData.email, formData.password);
           
-          // Auto-redirect after 3 seconds
+          // Auto-redirect after 20 seconds so user can see their dealer ID
           setTimeout(() => {
             navigate('/dealer-portal');
-          }, 3000);
+          }, 20000);
         } catch (loginError) {
           console.error('Auto-login failed:', loginError);
-          // If auto-login fails, redirect to login page
+          // If auto-login fails, redirect to login page after 20 seconds
           setTimeout(() => {
             navigate('/dealer-login');
-          }, 3000);
+          }, 20000);
         }
       } else {
         setError(response.data.message || 'Registration failed');
@@ -169,19 +169,25 @@ const DealerRegister = () => {
             <p className="text-gray-600 mb-6">
               Your dealer account has been created successfully and you're being logged in automatically.
             </p>
-            <div className="bg-gray-50 rounded-lg p-6 mb-6">
+            <div className="bg-gradient-to-br from-brand-light/10 to-brand-dark/10 rounded-lg p-6 mb-6 border-2 border-brand-light">
               <p className="text-sm text-gray-600 mb-2">Your Dealer ID:</p>
-              <p className="text-2xl font-bold text-brand-light mb-2">{dealerId}</p>
+              <p className="text-3xl font-bold text-brand-light mb-2 tracking-wider">{dealerId}</p>
               <p className="text-sm text-gray-500">
-                This ID has been saved to your account. You can find it in your profile.
+                ⚠️ Please save this ID! You'll need it to login to your dealer portal.
               </p>
             </div>
-            <p className="text-sm text-gray-600 mb-4">
+            <p className="text-sm text-gray-600 mb-6">
               An email has been sent to <strong>{formData.email}</strong> with your dealer ID and login instructions.
             </p>
+            <button
+              onClick={() => navigate('/dealer-portal')}
+              className="w-full py-3 gradient-brand text-white font-semibold rounded-lg hover:opacity-90 transition-opacity mb-4"
+            >
+              Go to Dealer Portal Now
+            </button>
             <p className="text-xs text-gray-500 flex items-center justify-center gap-2">
               <span className="inline-block w-2 h-2 bg-brand-light rounded-full animate-pulse"></span>
-              Redirecting to dealer portal...
+              Auto-redirecting in 20 seconds...
             </p>
           </div>
         </ScrollAnimation>

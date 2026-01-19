@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { Briefcase } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import api from '../utils/api';
+import { useAuth } from '../context/AuthContext';
 import ScrollAnimation from '../components/ScrollAnimation';
 
 const DealerPortalLogin = () => {
   const navigate = useNavigate();
+  const { checkAuth } = useAuth();
   const [dealerId, setDealerId] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -26,6 +28,10 @@ const DealerPortalLogin = () => {
         // Store token and user data
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(response.data.user));
+        
+        // Update AuthContext with new user data
+        await checkAuth();
+        
         navigate('/dealer-portal');
       } else {
         setError(response.data.message || 'Login failed');
