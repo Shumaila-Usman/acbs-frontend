@@ -10,11 +10,20 @@ const AuthPage = () => {
   
   // Determine initial panel based on route
   const [isLoginActive, setIsLoginActive] = useState(location.pathname === '/login');
+  
+  // Animation state for form entrance
+  const [isAnimated, setIsAnimated] = useState(false);
 
   // Update panel when route changes
   useEffect(() => {
     setIsLoginActive(location.pathname === '/login');
   }, [location.pathname]);
+
+  // Trigger animation on mount
+  useEffect(() => {
+    const timer = setTimeout(() => setIsAnimated(true), 50);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Login form state
   const [loginData, setLoginData] = useState({
@@ -162,7 +171,7 @@ const AuthPage = () => {
 
   // Mobile Login Form Component
   const MobileLoginForm = () => (
-    <div className="w-full max-w-md mx-auto bg-white rounded-2xl shadow-xl p-8">
+    <div className={`w-full max-w-md mx-auto bg-white rounded-2xl shadow-xl p-6 sm:p-8 transition-all duration-500 ease-out ${isAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
       <h2 className="text-3xl font-bold text-center mb-2 bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] bg-clip-text text-transparent">
         Login
       </h2>
@@ -231,7 +240,7 @@ const AuthPage = () => {
 
   // Mobile Register Form Component
   const MobileRegisterForm = () => (
-    <div className="w-full max-w-md mx-auto bg-white rounded-2xl shadow-xl p-8">
+    <div className={`w-full max-w-md mx-auto bg-white rounded-2xl shadow-xl p-6 sm:p-8 transition-all duration-500 ease-out ${isAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
       <h2 className="text-3xl font-bold text-center mb-2 bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] bg-clip-text text-transparent">
         Registration
       </h2>
@@ -387,14 +396,14 @@ const AuthPage = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-4 sm:py-8 lg:py-12">
       {/* Mobile View - Simple Forms */}
       <div className="lg:hidden w-full">
         {isLoginActive ? <MobileLoginForm /> : <MobileRegisterForm />}
       </div>
 
       {/* Desktop View - Sliding Panel Design */}
-      <div className="hidden lg:block relative w-full max-w-4xl min-h-[600px] bg-white rounded-2xl shadow-2xl overflow-hidden">
+      <div className={`hidden lg:block relative w-full max-w-4xl min-h-[600px] bg-white rounded-2xl shadow-2xl overflow-hidden transition-all duration-500 ease-out ${isAnimated ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
         {/* Forms Container */}
         <div className="flex h-full min-h-[600px]">
           {/* Login Form - Left Side */}
