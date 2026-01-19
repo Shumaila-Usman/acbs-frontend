@@ -38,7 +38,7 @@ const CheckoutPage = () => {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
         <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 text-center">
-          <div className="w-20 h-20 mx-auto bg-gradient-to-br from-[#0ea7e0]/20 to-[#5631cf]/20 rounded-full flex items-center justify-center mb-6">
+          <div className="w-20 h-20 mx-auto bg-gradient-to-br from-[#0ea7e0]/20 to-[#0369a1]/20 rounded-full flex items-center justify-center mb-6">
             <ShoppingCart size={40} className="text-[#0ea7e0]" />
           </div>
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Dealer Access Required</h1>
@@ -118,7 +118,7 @@ const CheckoutPage = () => {
               
               <div className="bg-gray-50 rounded-xl p-6 mb-8">
                 <p className="text-sm text-gray-500 mb-2">Order Number</p>
-                <p className="text-2xl font-bold bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] bg-clip-text text-transparent">
+                <p className="text-2xl font-bold bg-gradient-to-r from-[#0ea7e0] to-[#0369a1] bg-clip-text text-transparent">
                   {orderId}
                 </p>
               </div>
@@ -147,7 +147,7 @@ const CheckoutPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] py-12">
+      <div className="bg-gradient-to-r from-[#0ea7e0] to-[#0369a1] py-12">
         <div className="max-w-7xl mx-auto px-4">
           <nav className="flex items-center gap-2 text-white/80 text-sm mb-4">
             <Link to="/" className="hover:text-white transition-colors">Home</Link>
@@ -200,7 +200,7 @@ const CheckoutPage = () => {
                   <div className="space-y-4">
                     {cartItems.map(item => (
                       <div key={item.productId || item._id} className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl">
-                        <div className="w-20 h-20 bg-gradient-to-br from-[#0ea7e0]/20 to-[#5631cf]/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <div className="w-20 h-20 bg-gradient-to-br from-[#0ea7e0]/20 to-[#0369a1]/20 rounded-lg flex items-center justify-center flex-shrink-0">
                           <ShoppingCart className="text-[#0ea7e0]" size={28} />
                         </div>
                         <div className="flex-1 min-w-0">
@@ -507,7 +507,7 @@ const CheckoutPage = () => {
                 <div className="border-t border-gray-200 mt-4 pt-4">
                   <div className="flex justify-between">
                     <span className="text-lg font-bold text-gray-900">Total</span>
-                    <span className="text-2xl font-bold bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] bg-clip-text text-transparent">
+                    <span className="text-2xl font-bold bg-gradient-to-r from-[#0ea7e0] to-[#0369a1] bg-clip-text text-transparent">
                       ${(getCartTotal() * 1.13).toFixed(2)}
                     </span>
                   </div>

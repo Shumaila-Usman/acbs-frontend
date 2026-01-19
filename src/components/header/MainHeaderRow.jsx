@@ -119,7 +119,7 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
                           <div className="max-h-64 overflow-y-auto space-y-3 mb-4">
                             {wishlistItems.map(item => (
                               <div key={item.productId || item._id} className="flex items-center gap-3 p-2 bg-gray-50 rounded-lg">
-                                <div className="w-12 h-12 bg-gradient-to-br from-[#0ea7e0]/20 to-[#5631cf]/20 rounded flex items-center justify-center flex-shrink-0">
+                                <div className="w-12 h-12 bg-gradient-to-br from-[#0ea7e0]/20 to-[#0369a1]/20 rounded flex items-center justify-center flex-shrink-0">
                                   <ShoppingBasket size={16} className="text-[#0ea7e0]" />
                                 </div>
                                 <div className="flex-1 min-w-0">
@@ -190,7 +190,7 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
                           <div className="max-h-64 overflow-y-auto space-y-3 mb-4">
                             {cartItems.map(item => (
                               <div key={item.productId || item._id} className="flex items-center gap-3 p-2 bg-gray-50 rounded-lg">
-                                <div className="w-14 h-14 bg-gradient-to-br from-[#0ea7e0]/20 to-[#5631cf]/20 rounded flex items-center justify-center flex-shrink-0">
+                                <div className="w-14 h-14 bg-gradient-to-br from-[#0ea7e0]/20 to-[#0369a1]/20 rounded flex items-center justify-center flex-shrink-0">
                                   <ShoppingBasket size={20} className="text-[#0ea7e0]" />
                                 </div>
                                 <div className="flex-1 min-w-0">
@@ -210,7 +210,7 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
                           <div className="border-t border-gray-200 pt-3 mb-3">
                             <div className="flex justify-between items-center mb-3">
                               <span className="font-semibold text-gray-900">Total:</span>
-                              <span className="text-xl font-bold bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] bg-clip-text text-transparent">
+                              <span className="text-xl font-bold bg-gradient-to-r from-[#0ea7e0] to-[#0369a1] bg-clip-text text-transparent">
                                 ${getCartTotal().toFixed(2)}
                               </span>
                             </div>
@@ -394,7 +394,7 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
                   <div className="flex-1 overflow-y-auto space-y-3 mb-4">
                     {wishlistItems.map(item => (
                       <div key={item.productId || item._id} className="flex items-center gap-3 p-2 bg-gray-50 rounded-lg">
-                        <div className="w-12 h-12 bg-gradient-to-br from-[#0ea7e0]/20 to-[#5631cf]/20 rounded flex items-center justify-center flex-shrink-0">
+                        <div className="w-12 h-12 bg-gradient-to-br from-[#0ea7e0]/20 to-[#0369a1]/20 rounded flex items-center justify-center flex-shrink-0">
                           <ShoppingBasket size={16} className="text-[#0ea7e0]" />
                         </div>
                         <div className="flex-1 min-w-0">
@@ -462,7 +462,7 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
                   <div className="flex-1 overflow-y-auto space-y-3 mb-4">
                     {cartItems.map(item => (
                       <div key={item.productId || item._id} className="flex items-center gap-3 p-2 bg-gray-50 rounded-lg">
-                        <div className="w-12 h-12 bg-gradient-to-br from-[#0ea7e0]/20 to-[#5631cf]/20 rounded flex items-center justify-center flex-shrink-0">
+                        <div className="w-12 h-12 bg-gradient-to-br from-[#0ea7e0]/20 to-[#0369a1]/20 rounded flex items-center justify-center flex-shrink-0">
                           <ShoppingBasket size={16} className="text-[#0ea7e0]" />
                         </div>
                         <div className="flex-1 min-w-0">
@@ -482,7 +482,7 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
                   <div className="border-t border-gray-200 pt-4">
                     <div className="flex justify-between items-center mb-4">
                       <span className="font-semibold text-gray-900">Total:</span>
-                      <span className="text-xl font-bold bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] bg-clip-text text-transparent">
+                      <span className="text-xl font-bold bg-gradient-to-r from-[#0ea7e0] to-[#0369a1] bg-clip-text text-transparent">
                         ${getCartTotal().toFixed(2)}
                       </span>
                     </div>

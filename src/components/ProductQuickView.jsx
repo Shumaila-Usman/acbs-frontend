@@ -72,7 +72,7 @@ const ProductQuickView = ({ product, isOpen, onClose }) => {
             {/* Main Image */}
             <div className="relative aspect-square bg-white rounded-xl overflow-hidden mb-4 flex items-center justify-center">
               <div className="text-center p-8">
-                <div className="w-48 h-48 mx-auto bg-gradient-to-br from-[#0ea7e0]/20 to-[#5631cf]/20 rounded-2xl flex items-center justify-center mb-4">
+                <div className="w-48 h-48 mx-auto bg-gradient-to-br from-[#0ea7e0]/20 to-[#0369a1]/20 rounded-2xl flex items-center justify-center mb-4">
                   <ShoppingCart className="text-[#0ea7e0]" size={64} />
                 </div>
                 <span className="text-gray-400">Product Image</span>
@@ -173,7 +173,7 @@ const ProductQuickView = ({ product, isOpen, onClose }) => {
             {/* Price - Only for Dealers */}
             {isDealer ? (
               <div className="flex items-baseline gap-3 mb-6">
-                <span className="text-3xl font-bold bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] bg-clip-text text-transparent">
+                <span className="text-3xl font-bold bg-gradient-to-r from-[#0ea7e0] to-[#0369a1] bg-clip-text text-transparent">
                   ${product.price.toFixed(2)}
                 </span>
                 {product.price > 50 && (
@@ -183,7 +183,7 @@ const ProductQuickView = ({ product, isOpen, onClose }) => {
                 )}
               </div>
             ) : (
-              <div className="mb-6 p-4 bg-gradient-to-r from-[#0ea7e0]/10 to-[#5631cf]/10 rounded-lg">
+              <div className="mb-6 p-4 bg-gradient-to-r from-[#0ea7e0]/10 to-[#0369a1]/10 rounded-lg">
                 <p className="text-gray-700 font-medium">💼 Dealer Pricing Available</p>
                 <p className="text-sm text-gray-500">Register as a dealer to see prices and place orders</p>
               </div>

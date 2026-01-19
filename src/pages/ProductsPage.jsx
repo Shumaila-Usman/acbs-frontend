@@ -48,14 +48,14 @@ const ProductCard = ({ product, viewMode, onQuickView, isDealer }) => {
         {/* Image - Full width on mobile, fixed width on desktop */}
         <div className="w-full sm:w-40 md:w-48 h-40 sm:h-auto flex-shrink-0 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center relative group">
           <div className="text-center p-4">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto bg-gradient-to-br from-[#0ea7e0]/20 to-[#5631cf]/20 rounded-lg flex items-center justify-center">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto bg-gradient-to-br from-[#0ea7e0]/20 to-[#0369a1]/20 rounded-lg flex items-center justify-center">
               <ShoppingCart className="text-[#0ea7e0]" size={28} />
             </div>
           </div>
           {/* Badge on image */}
           {product.badge && (
             <div className="absolute top-2 left-2">
-              <span className="text-xs font-bold text-white bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] px-2 py-1 rounded-full shadow">
+              <span className="text-xs font-bold text-white bg-gradient-to-r from-[#0ea7e0] to-[#0369a1] px-2 py-1 rounded-full shadow">
                 {product.badge}
               </span>
             </div>
@@ -81,12 +81,10 @@ const ProductCard = ({ product, viewMode, onQuickView, isDealer }) => {
           
           {/* Price and Actions */}
           <div className="flex items-center justify-between mt-3 gap-2">
-            {isDealer ? (
-              <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] bg-clip-text text-transparent">
+            {isDealer && (
+              <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-[#0ea7e0] to-[#0369a1] bg-clip-text text-transparent">
                 ${product.price.toFixed(2)}
               </span>
-            ) : (
-              <span className="text-sm text-gray-500 italic">Login as dealer to see price</span>
             )}
             <div className="flex gap-1 sm:gap-2">
               {isDealer && (
@@ -136,7 +134,7 @@ const ProductCard = ({ product, viewMode, onQuickView, isDealer }) => {
       <div className="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 relative overflow-hidden">
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center p-4">
-            <div className="w-24 h-24 mx-auto bg-gradient-to-br from-[#0ea7e0]/20 to-[#5631cf]/20 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
+            <div className="w-24 h-24 mx-auto bg-gradient-to-br from-[#0ea7e0]/20 to-[#0369a1]/20 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
               <ShoppingCart className="text-[#0ea7e0]" size={40} />
             </div>
             <span className="text-xs text-gray-500">Product Image</span>
@@ -146,7 +144,7 @@ const ProductCard = ({ product, viewMode, onQuickView, isDealer }) => {
         {/* Badges */}
         {product.badge && (
           <div className="absolute top-3 left-3">
-            <span className="text-xs font-bold text-white bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] px-3 py-1 rounded-full shadow-lg">
+            <span className="text-xs font-bold text-white bg-gradient-to-r from-[#0ea7e0] to-[#0369a1] px-3 py-1 rounded-full shadow-lg">
               {product.badge}
             </span>
           </div>
@@ -213,15 +211,13 @@ const ProductCard = ({ product, viewMode, onQuickView, isDealer }) => {
           {product.name}
         </h3>
         <p className="text-gray-600 text-sm line-clamp-2 mb-3">{product.description}</p>
-        <div className="flex items-center justify-between">
-          {isDealer ? (
-            <span className="text-xl font-bold bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] bg-clip-text text-transparent">
+        {isDealer && (
+          <div className="flex items-center justify-between">
+            <span className="text-xl font-bold bg-gradient-to-r from-[#0ea7e0] to-[#0369a1] bg-clip-text text-transparent">
               ${product.price.toFixed(2)}
             </span>
-          ) : (
-            <span className="text-sm text-gray-500 italic">Login as dealer for pricing</span>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -348,7 +344,7 @@ const ProductsPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] py-16 overflow-hidden">
+      <div className="relative bg-gradient-to-r from-[#0ea7e0] to-[#0369a1] py-16 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-10 left-10 w-40 h-40 bg-white rounded-full blur-3xl"></div>
           <div className="absolute bottom-10 right-10 w-60 h-60 bg-white rounded-full blur-3xl"></div>
@@ -413,7 +409,7 @@ const ProductsPage = () => {
                   <button
                     type="button"
                     onClick={clearSearch}
-                    className="mt-2 text-sm text-[#0ea7e0] hover:text-[#5631cf]"
+                    className="mt-2 text-sm text-[#0ea7e0] hover:text-[#0369a1]"
                   >
                     Clear search
                   </button>
@@ -427,7 +423,7 @@ const ProductsPage = () => {
                   <Link
                     to="/products"
                     className={`block px-3 py-2 rounded-lg transition-colors ${
-                      !categoryId ? 'bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] text-white' : 'hover:bg-gray-100'
+                      !categoryId ? 'bg-gradient-to-r from-[#0ea7e0] to-[#0369a1] text-white' : 'hover:bg-gray-100'
                     }`}
                   >
                     All Products
@@ -437,7 +433,7 @@ const ProductsPage = () => {
                       key={cat.categoryId}
                       to={`/products/${cat.categoryId}`}
                       className={`block px-3 py-2 rounded-lg transition-colors ${
-                        categoryId === cat.categoryId ? 'bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] text-white' : 'hover:bg-gray-100'
+                        categoryId === cat.categoryId ? 'bg-gradient-to-r from-[#0ea7e0] to-[#0369a1] text-white' : 'hover:bg-gray-100'
                       }`}
                     >
                       {cat.category} ({cat.count})
@@ -523,13 +519,13 @@ const ProductsPage = () => {
                 <div className="flex border border-gray-300 rounded-lg overflow-hidden">
                   <button
                     onClick={() => setViewMode('grid')}
-                    className={`p-2 ${viewMode === 'grid' ? 'bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] text-white' : 'hover:bg-gray-100'}`}
+                    className={`p-2 ${viewMode === 'grid' ? 'bg-gradient-to-r from-[#0ea7e0] to-[#0369a1] text-white' : 'hover:bg-gray-100'}`}
                   >
                     <Grid size={20} />
                   </button>
                   <button
                     onClick={() => setViewMode('list')}
-                    className={`p-2 ${viewMode === 'list' ? 'bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] text-white' : 'hover:bg-gray-100'}`}
+                    className={`p-2 ${viewMode === 'list' ? 'bg-gradient-to-r from-[#0ea7e0] to-[#0369a1] text-white' : 'hover:bg-gray-100'}`}
                   >
                     <List size={20} />
                   </button>

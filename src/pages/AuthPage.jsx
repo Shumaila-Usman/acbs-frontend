@@ -173,7 +173,7 @@ const AuthPage = () => {
         {isLoginActive ? (
           /* Mobile Login Form - Inline */
           <div className={`w-full max-w-md mx-auto bg-white rounded-2xl shadow-xl p-6 sm:p-8 transition-all duration-500 ease-out ${isAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <h2 className="text-3xl font-bold text-center mb-2 bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] bg-clip-text text-transparent">
+            <h2 className="text-3xl font-bold text-center mb-2 bg-gradient-to-r from-[#0ea7e0] to-[#0369a1] bg-clip-text text-transparent">
               Login
             </h2>
             <p className="text-center text-gray-600 mb-6">Sign in to your account</p>
@@ -216,7 +216,7 @@ const AuthPage = () => {
                   <input type="checkbox" className="mr-2 rounded" />
                   <span className="text-gray-600">Remember me</span>
                 </label>
-                <a href="#" className="text-[#0ea7e0] hover:text-[#5631cf] font-medium">
+                <a href="#" className="text-[#0ea7e0] hover:text-[#0369a1] font-medium">
                   Forgot Password?
                 </a>
               </div>
@@ -233,7 +233,7 @@ const AuthPage = () => {
             <div className="mt-6 text-center">
               <p className="text-gray-600">
                 Don't have an account?{' '}
-                <Link to="/register" className="text-[#0ea7e0] hover:text-[#5631cf] font-semibold">
+                <Link to="/register" className="text-[#0ea7e0] hover:text-[#0369a1] font-semibold">
                   Register
                 </Link>
               </p>
@@ -242,7 +242,7 @@ const AuthPage = () => {
         ) : (
           /* Mobile Register Form - Inline */
           <div className={`w-full max-w-md mx-auto bg-white rounded-2xl shadow-xl p-6 sm:p-8 transition-all duration-500 ease-out ${isAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <h2 className="text-3xl font-bold text-center mb-2 bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] bg-clip-text text-transparent">
+            <h2 className="text-3xl font-bold text-center mb-2 bg-gradient-to-r from-[#0ea7e0] to-[#0369a1] bg-clip-text text-transparent">
               Registration
             </h2>
             <p className="text-center text-gray-600 mb-6">Create your account</p>
@@ -363,7 +363,7 @@ const AuthPage = () => {
             <div className="mt-6 text-center">
               <p className="text-gray-600">
                 Already have an account?{' '}
-                <Link to="/login" className="text-[#0ea7e0] hover:text-[#5631cf] font-semibold">
+                <Link to="/login" className="text-[#0ea7e0] hover:text-[#0369a1] font-semibold">
                   Login
                 </Link>
               </p>
@@ -378,7 +378,7 @@ const AuthPage = () => {
           {/* Login Form - Left Side */}
           <div className={`w-1/2 p-8 flex flex-col justify-center transition-all duration-700 ${isLoginActive ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
             <div className="max-w-sm mx-auto w-full">
-              <h2 className="text-3xl font-bold text-center mb-2 bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] bg-clip-text text-transparent">
+              <h2 className="text-3xl font-bold text-center mb-2 bg-gradient-to-r from-[#0ea7e0] to-[#0369a1] bg-clip-text text-transparent">
                 Login
               </h2>
               <p className="text-center text-gray-600 mb-6">Sign in to your account</p>
@@ -415,7 +415,7 @@ const AuthPage = () => {
                     <input type="checkbox" className="mr-2 rounded" />
                     <span className="text-gray-600">Remember me</span>
                   </label>
-                  <a href="#" className="text-[#0ea7e0] hover:text-[#5631cf] font-medium">Forgot Password?</a>
+                  <a href="#" className="text-[#0ea7e0] hover:text-[#0369a1] font-medium">Forgot Password?</a>
                 </div>
                 <button
                   type="submit"
@@ -431,7 +431,7 @@ const AuthPage = () => {
           {/* Register Form - Right Side */}
           <div className={`w-1/2 p-8 flex flex-col justify-center transition-all duration-700 ${!isLoginActive ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
             <div className="max-w-sm mx-auto w-full">
-              <h2 className="text-3xl font-bold text-center mb-2 bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] bg-clip-text text-transparent">
+              <h2 className="text-3xl font-bold text-center mb-2 bg-gradient-to-r from-[#0ea7e0] to-[#0369a1] bg-clip-text text-transparent">
                 Registration
               </h2>
               <p className="text-center text-gray-600 mb-6">Create your account</p>

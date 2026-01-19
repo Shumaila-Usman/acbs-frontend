@@ -299,7 +299,7 @@ const DealerPortal = () => {
                         <tr key={productId} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
                           <td className="px-6 py-4">
                             <div className="flex items-center gap-3">
-                              <div className="w-14 h-14 bg-gradient-to-br from-[#0ea7e0]/20 to-[#5631cf]/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                              <div className="w-14 h-14 bg-gradient-to-br from-[#0ea7e0]/20 to-[#0369a1]/20 rounded-lg flex items-center justify-center flex-shrink-0">
                                 <ShoppingCart size={20} className="text-[#0ea7e0]" />
                               </div>
                               <div>
