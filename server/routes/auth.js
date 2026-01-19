@@ -432,5 +432,85 @@ router.get('/me', authMiddleware, async (req, res) => {
   }
 });
 
+// Get user's favourite/recommended products based on recent activity
+router.get('/favourites', authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId).select('-password');
+    if (!user) {
+      return res.status(404).json({ 
+        success: false, 
+        message: 'User not found' 
+      });
+    }
+
+    // Get user's recent categories from their order history or search history
+    // For now, we'll return products based on any stored preferences
+    // This can be expanded when order tracking is implemented
+    
+    const recentCategories = user.recentCategories || [];
+    
+    // Return empty to signal frontend to use default products
+    // When order system is built, this will return personalized products
+    res.json({
+      success: true,
+      products: [],
+      categories: recentCategories
+    });
+  } catch (error) {
+    console.error('Get favourites error:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Server error' 
+    });
+  }
+});
+
+// Update user's recent category (for personalization)
+router.post('/track-category', authMiddleware, async (req, res) => {
+  try {
+    const { category } = req.body;
+    
+    if (!category) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Category is required' 
+      });
+    }
+
+    const user = await User.findById(req.user.userId);
+    if (!user) {
+      return res.status(404).json({ 
+        success: false, 
+        message: 'User not found' 
+      });
+    }
+
+    // Add category to recent categories (keep last 10)
+    if (!user.recentCategories) {
+      user.recentCategories = [];
+    }
+    
+    // Remove if already exists (to move to front)
+    user.recentCategories = user.recentCategories.filter(c => c !== category);
+    // Add to front
+    user.recentCategories.unshift(category);
+    // Keep only last 10
+    user.recentCategories = user.recentCategories.slice(0, 10);
+
+    await user.save();
+
+    res.json({
+      success: true,
+      message: 'Category tracked successfully'
+    });
+  } catch (error) {
+    console.error('Track category error:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Server error' 
+    });
+  }
+});
+
 module.exports = router;
 

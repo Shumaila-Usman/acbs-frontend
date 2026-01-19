@@ -79,6 +79,10 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  recentCategories: {
+    type: [String],
+    default: []
+  },
   createdAt: {
     type: Date,
     default: Date.now

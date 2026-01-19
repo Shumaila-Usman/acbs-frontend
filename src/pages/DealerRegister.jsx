@@ -336,7 +336,7 @@ const DealerRegister = () => {
                       className="w-5 h-5 text-brand-light focus:ring-brand-light border-gray-300 rounded"
                     />
                     <label htmlFor="hasTireSupplier" className="text-sm font-medium text-gray-700">
-                      Do you currently have a tire supplier?
+                      Do you currently have a supplier?
                     </label>
                   </div>
 

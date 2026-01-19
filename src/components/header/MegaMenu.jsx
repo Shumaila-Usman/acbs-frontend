@@ -35,9 +35,10 @@ const MegaMenu = ({ category }) => {
                         <li key={linkIndex}>
                           <Link
                             to={link.path}
-                            className="text-sm text-gray-700 hover:text-black hover:underline block"
+                            className="text-sm text-gray-700 hover:text-black block relative group w-fit"
                           >
                             {link.name}
+                            <span className="absolute bottom-0 left-0 h-0.5 w-0 group-hover:w-full transition-all duration-300 bg-gradient-to-r from-[#0ea7e0] to-[#5631cf]"></span>
                           </Link>
                         </li>
                       ))}

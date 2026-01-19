@@ -25,12 +25,6 @@ const CategoryNavBar = () => {
               )}
             </div>
           ))}
-          <Link
-            to="/sale"
-            className="py-4 text-sm font-medium text-red-400 hover:text-red-300 transition-colors"
-          >
-            Sale & Offers
-          </Link>
         </div>
       </div>
     </nav>

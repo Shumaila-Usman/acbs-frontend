@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { CartProvider } from './context/CartContext';
 import Header from './components/header/Header';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import AuthPage from './pages/AuthPage';
 import Account from './pages/Account';
 import DealerPortalLogin from './pages/DealerPortalLogin';
 import DealerRegister from './pages/DealerRegister';
@@ -14,18 +14,20 @@ import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
 import FAQ from './pages/FAQ';
 import ComingSoon from './pages/ComingSoon';
+import ProductsPage from './pages/ProductsPage';
 
 function App() {
   return (
     <AuthProvider>
+      <CartProvider>
       <Router>
         <div className="min-h-screen bg-white flex flex-col">
           <Header />
           <div className="flex-1">
             <Routes>
               <Route path="/" element={<HomePage />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<AuthPage />} />
+              <Route path="/register" element={<AuthPage />} />
               <Route path="/account/*" element={<Account />} />
               <Route path="/dealer-portal-login" element={<DealerPortalLogin />} />
               <Route path="/dealer-login" element={<DealerPortalLogin />} />
@@ -34,6 +36,13 @@ function App() {
               <Route path="/about" element={<AboutUs />} />
               <Route path="/contact" element={<ContactUs />} />
               <Route path="/faq" element={<FAQ />} />
+              
+              {/* Product Pages */}
+              <Route path="/products" element={<ProductsPage />} />
+              <Route path="/products/:categoryId" element={<ProductsPage />} />
+              <Route path="/products/:categoryId/:subcategoryId" element={<ProductsPage />} />
+              <Route path="/category/:categoryId" element={<ProductsPage />} />
+              <Route path="/category/:categoryId/:subcategoryId" element={<ProductsPage />} />
               
               {/* Placeholder pages - Coming Soon */}
               <Route path="/careers" element={<ComingSoon pageName="Careers" />} />
@@ -66,6 +75,7 @@ function App() {
           <Footer />
         </div>
       </Router>
+      </CartProvider>
     </AuthProvider>
   );
 }

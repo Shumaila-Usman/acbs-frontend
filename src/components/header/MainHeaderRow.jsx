@@ -1,11 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Menu, Heart, ShoppingBasket, X, Menu as MenuIcon, User } from 'lucide-react';
+import { Search, Menu, Heart, ShoppingBasket, X, Menu as MenuIcon, User, Trash2 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { useCart } from '../../context/CartContext';
 import RegisterDropdown from './RegisterDropdown';
 
 const MainHeaderRow = ({ onMobileMenuToggle }) => {
   const { user, isAuthenticated } = useAuth();
+  const { cartItems, wishlistItems, getCartCount, getWishlistCount, getCartTotal, removeFromCart, removeFromWishlist } = useCart();
   const [searchQuery, setSearchQuery] = useState('');
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const [isBasketOpen, setIsBasketOpen] = useState(false);
@@ -92,137 +94,143 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
             {/* Wishlist/Heart Icon */}
             <div ref={wishlistRef} className="relative">
               <button 
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors group"
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors group relative"
                 onClick={() => setIsWishlistOpen(!isWishlistOpen)}
               >
                 <Heart 
                   size={24} 
                   className={`transition-all ${isWishlistOpen ? 'fill-brand-light text-brand-light' : 'text-gray-700'}`}
                 />
+                {getWishlistCount() > 0 && (
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
+                    {getWishlistCount()}
+                  </span>
+                )}
               </button>
 
               {/* Desktop Dropdown */}
               {isWishlistOpen && (
                 <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-lg shadow-2xl border border-gray-200 overflow-hidden z-50">
-                  <div className="p-6">
-                    {isAuthenticated && user ? (
+                  <div className="p-4">
+                    <h3 className="text-lg font-bold text-gray-900 mb-4">My Wishlist ({getWishlistCount()})</h3>
+                    {wishlistItems.length > 0 ? (
                       <>
-                        <div className="flex items-center gap-3 mb-4">
-                          <div className="p-2 gradient-brand rounded-full text-white">
-                            <User size={20} />
-                          </div>
-                          <div>
-                            <h3 className="text-lg font-bold text-gray-900">{user.name}</h3>
-                            <p className="text-sm text-gray-600">{user.email}</p>
-                          </div>
-                        </div>
-                        <div className="bg-brand-light/10 p-4 rounded-lg mb-4">
-                          <p className="text-gray-700 font-medium">Your wishlist is ready!</p>
-                          <p className="text-sm text-gray-600 mt-1">Save your favorite items here.</p>
+                        <div className="max-h-64 overflow-y-auto space-y-3 mb-4">
+                          {wishlistItems.map(item => (
+                            <div key={item.productId || item._id} className="flex items-center gap-3 p-2 bg-gray-50 rounded-lg">
+                              <div className="w-12 h-12 bg-gradient-to-br from-[#0ea7e0]/20 to-[#5631cf]/20 rounded flex items-center justify-center flex-shrink-0">
+                                <ShoppingBasket size={16} className="text-[#0ea7e0]" />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm font-medium text-gray-900 truncate">{item.name}</p>
+                                <p className="text-sm text-[#0ea7e0] font-semibold">${item.price.toFixed(2)}</p>
+                              </div>
+                              <button 
+                                onClick={() => removeFromWishlist(item.productId || item._id)}
+                                className="p-1 text-gray-400 hover:text-red-500 transition-colors"
+                              >
+                                <Trash2 size={16} />
+                              </button>
+                            </div>
+                          ))}
                         </div>
                         <Link
-                          to="/account"
-                          className="block py-3 px-4 text-center font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
+                          to="/products"
+                          className="block py-2 px-4 text-center font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
                           onClick={() => setIsWishlistOpen(false)}
                         >
-                          View My Account
+                          Continue Shopping
                         </Link>
                       </>
                     ) : (
-                      <>
-                        <h3 className="text-xl font-bold text-gray-900 mb-2">My Lists</h3>
-                        <p className="text-gray-600 mb-6">Sign in to organize and share your saved products.</p>
-                        <div className="flex flex-col gap-3">
-                          <Link
-                            to="/login"
-                            className="py-3 px-4 text-center font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
-                            onClick={() => setIsWishlistOpen(false)}
-                          >
-                            Sign In
-                          </Link>
-                          <Link
-                            to="/register"
-                            className="py-3 px-4 text-center font-semibold border-2 border-transparent hover:border-brand-light text-gray-900 rounded-lg transition-colors"
-                            onClick={() => setIsWishlistOpen(false)}
-                          >
-                            Create Account
-                          </Link>
-                        </div>
-                      </>
+                      <div className="text-center py-6">
+                        <Heart size={40} className="mx-auto text-gray-300 mb-3" />
+                        <p className="text-gray-600 mb-4">Your wishlist is empty</p>
+                        <Link
+                          to="/products"
+                          className="inline-block py-2 px-4 font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
+                          onClick={() => setIsWishlistOpen(false)}
+                        >
+                          Browse Products
+                        </Link>
+                      </div>
                     )}
                   </div>
                 </div>
               )}
             </div>
 
-            {/* Basket Icon */}
+            {/* Basket/Cart Icon */}
             <div ref={basketRef} className="relative">
               <button 
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors group"
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors group relative"
                 onClick={() => setIsBasketOpen(!isBasketOpen)}
               >
                 <ShoppingBasket 
                   size={24} 
                   className={`transition-all ${isBasketOpen ? 'fill-brand-dark text-brand-dark' : 'text-gray-700'}`}
                 />
+                {getCartCount() > 0 && (
+                  <span className="absolute -top-1 -right-1 w-5 h-5 gradient-brand text-white text-xs font-bold rounded-full flex items-center justify-center">
+                    {getCartCount()}
+                  </span>
+                )}
               </button>
 
               {/* Desktop Dropdown */}
               {isBasketOpen && (
-                <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-lg shadow-2xl border border-gray-200 overflow-hidden z-50">
-                  <div className="p-6">
-                    {isAuthenticated && user ? (
+                <div className="absolute right-0 top-full mt-2 w-96 bg-white rounded-lg shadow-2xl border border-gray-200 overflow-hidden z-50">
+                  <div className="p-4">
+                    <h3 className="text-lg font-bold text-gray-900 mb-4">Shopping Cart ({getCartCount()})</h3>
+                    {cartItems.length > 0 ? (
                       <>
-                        <div className="flex items-center gap-3 mb-4">
-                          <div className="p-2 gradient-brand rounded-full text-white">
-                            <User size={20} />
+                        <div className="max-h-64 overflow-y-auto space-y-3 mb-4">
+                          {cartItems.map(item => (
+                            <div key={item.productId || item._id} className="flex items-center gap-3 p-2 bg-gray-50 rounded-lg">
+                              <div className="w-14 h-14 bg-gradient-to-br from-[#0ea7e0]/20 to-[#5631cf]/20 rounded flex items-center justify-center flex-shrink-0">
+                                <ShoppingBasket size={20} className="text-[#0ea7e0]" />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm font-medium text-gray-900 truncate">{item.name}</p>
+                                <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
+                                <p className="text-sm text-[#0ea7e0] font-semibold">${(item.price * item.quantity).toFixed(2)}</p>
+                              </div>
+                              <button 
+                                onClick={() => removeFromCart(item.productId || item._id)}
+                                className="p-1 text-gray-400 hover:text-red-500 transition-colors"
+                              >
+                                <Trash2 size={16} />
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="border-t border-gray-200 pt-3 mb-3">
+                          <div className="flex justify-between items-center mb-3">
+                            <span className="font-semibold text-gray-900">Total:</span>
+                            <span className="text-xl font-bold bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] bg-clip-text text-transparent">
+                              ${getCartTotal().toFixed(2)}
+                            </span>
                           </div>
-                          <div>
-                            <h3 className="text-lg font-bold text-gray-900">{user.name}</h3>
-                            <p className="text-sm text-gray-600">{user.email}</p>
-                          </div>
+                          <button
+                            className="w-full py-3 px-4 font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
+                            onClick={() => setIsBasketOpen(false)}
+                          >
+                            Checkout
+                          </button>
                         </div>
-                        <div className="bg-green-50 p-4 rounded-lg mb-4">
-                          <p className="text-gray-700 font-medium">Welcome back, {user.name.split(' ')[0]}! 👋</p>
-                          <p className="text-sm text-gray-600 mt-1">Your basket is ready for shopping.</p>
-                        </div>
-                        <div className="pt-4 border-t border-gray-200 mb-4 flex items-center gap-2 text-sm text-gray-600">
-                          <ShoppingBasket size={18} />
-                          <span>See samples, rewards, and promos in <Link to="/basket" className="text-brand-light hover:underline">basket</Link>.</span>
-                        </div>
-                        <Link
-                          to="/account"
-                          className="block py-3 px-4 text-center font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
-                          onClick={() => setIsBasketOpen(false)}
-                        >
-                          View My Account
-                        </Link>
                       </>
                     ) : (
-                      <>
-                        <h3 className="text-xl font-bold text-gray-900 mb-4">Basket</h3>
-                        <p className="text-center text-gray-900 font-medium mb-6">Sign in to see items you may have added previously.</p>
-                        <div className="flex flex-col gap-3 mb-4">
-                          <Link
-                            to="/login"
-                            className="py-3 px-4 text-center font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
-                            onClick={() => setIsBasketOpen(false)}
-                          >
-                            Sign In
-                          </Link>
-                          <Link
-                            to="/register"
-                            className="py-3 px-4 text-center font-semibold border-2 border-transparent hover:border-brand-light text-gray-900 rounded-lg transition-colors"
-                            onClick={() => setIsBasketOpen(false)}
-                          >
-                            Create Account
-                          </Link>
-                        </div>
-                        <div className="pt-4 border-t border-gray-200 flex items-center gap-2 text-sm text-gray-600">
-                          <ShoppingBasket size={18} />
-                          <span>See samples, rewards, and promos in <Link to="/basket" className="text-brand-light hover:underline">basket</Link>.</span>
-                        </div>
-                      </>
+                      <div className="text-center py-6">
+                        <ShoppingBasket size={40} className="mx-auto text-gray-300 mb-3" />
+                        <p className="text-gray-600 mb-4">Your cart is empty</p>
+                        <Link
+                          to="/products"
+                          className="inline-block py-2 px-4 font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
+                          onClick={() => setIsBasketOpen(false)}
+                        >
+                          Start Shopping
+                        </Link>
+                      </div>
                     )}
                   </div>
                 </div>
@@ -266,6 +274,14 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
                     >
                       FAQ
                     </Link>
+                    <div className="border-t border-gray-200 my-2"></div>
+                    <Link
+                      to="/sale"
+                      className="block px-6 py-3 text-red-500 hover:bg-red-50 transition-colors font-semibold"
+                      onClick={() => setIsPagesMenuOpen(false)}
+                    >
+                      🔥 Sale & Offers
+                    </Link>
                   </div>
                 </div>
               )}
@@ -290,12 +306,17 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
             onClick={() => setIsMobileWishlistDrawer(true)}
             onTouchStart={() => setIsMobileWishlistHover(true)}
             onTouchEnd={() => setIsMobileWishlistHover(false)}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0"
+            className="p-2 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0 relative"
           >
             <Heart 
               size={20} 
               className={`transition-all ${isMobileWishlistHover ? 'fill-brand-light text-brand-light' : 'text-gray-700'}`}
             />
+            {getWishlistCount() > 0 && (
+              <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                {getWishlistCount()}
+              </span>
+            )}
           </button>
 
           {/* Basket Icon */}
@@ -303,12 +324,17 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
             onClick={() => setIsMobileBasketDrawer(true)}
             onTouchStart={() => setIsMobileBasketHover(true)}
             onTouchEnd={() => setIsMobileBasketHover(false)}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0"
+            className="p-2 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0 relative"
           >
             <ShoppingBasket 
               size={20} 
               className={`transition-all ${isMobileBasketHover ? 'fill-brand-dark text-brand-dark' : 'text-gray-700'}`}
             />
+            {getCartCount() > 0 && (
+              <span className="absolute -top-1 -right-1 w-4 h-4 gradient-brand text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                {getCartCount()}
+              </span>
+            )}
           </button>
 
           {/* Search Bar */}
@@ -342,9 +368,9 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
           />
         )}
         <div className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-50 md:hidden transform transition-transform duration-300 ${isMobileWishlistDrawer ? 'translate-x-0' : 'translate-x-full'}`}>
-          <div className="p-6">
+          <div className="p-6 h-full flex flex-col">
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xl font-bold text-gray-900">My Lists</h3>
+              <h3 className="text-xl font-bold text-gray-900">My Wishlist ({getWishlistCount()})</h3>
               <button 
                 onClick={() => setIsMobileWishlistDrawer(false)}
                 className="p-2 hover:bg-gray-100 rounded-lg"
@@ -352,49 +378,48 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
                 <X size={24} />
               </button>
             </div>
-            {isAuthenticated && user ? (
+            
+            {wishlistItems.length > 0 ? (
               <>
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 gradient-brand rounded-full text-white">
-                    <User size={20} />
-                  </div>
-                  <div>
-                    <p className="font-bold text-gray-900">{user.name}</p>
-                    <p className="text-xs text-gray-600">{user.email}</p>
-                  </div>
-                </div>
-                <div className="bg-brand-light/10 p-4 rounded-lg mb-4">
-                  <p className="text-gray-700 font-medium">Your wishlist is ready!</p>
-                  <p className="text-sm text-gray-600 mt-1">Save your favorite items here.</p>
+                <div className="flex-1 overflow-y-auto space-y-3 mb-4">
+                  {wishlistItems.map(item => (
+                    <div key={item.productId || item._id} className="flex items-center gap-3 p-2 bg-gray-50 rounded-lg">
+                      <div className="w-12 h-12 bg-gradient-to-br from-[#0ea7e0]/20 to-[#5631cf]/20 rounded flex items-center justify-center flex-shrink-0">
+                        <ShoppingBasket size={16} className="text-[#0ea7e0]" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-gray-900 truncate">{item.name}</p>
+                        <p className="text-sm text-[#0ea7e0] font-semibold">${item.price.toFixed(2)}</p>
+                      </div>
+                      <button 
+                        onClick={() => removeFromWishlist(item.productId || item._id)}
+                        className="p-1 text-gray-400 hover:text-red-500 transition-colors"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  ))}
                 </div>
                 <Link
-                  to="/account"
+                  to="/products"
                   className="block py-3 px-4 text-center font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
                   onClick={() => setIsMobileWishlistDrawer(false)}
                 >
-                  View My Account
+                  Continue Shopping
                 </Link>
               </>
             ) : (
-              <>
-                <p className="text-gray-600 mb-6">Sign in to organize and share your saved products.</p>
-                <div className="flex flex-col gap-3">
-                  <Link
-                    to="/login"
-                    className="py-3 px-4 text-center font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
-                    onClick={() => setIsMobileWishlistDrawer(false)}
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    to="/register"
-                    className="py-3 px-4 text-center font-semibold border-2 border-transparent hover:border-brand-light text-gray-900 rounded-lg transition-colors"
-                    onClick={() => setIsMobileWishlistDrawer(false)}
-                  >
-                    Create Account
-                  </Link>
-                </div>
-              </>
+              <div className="text-center py-8">
+                <Heart size={48} className="mx-auto text-gray-300 mb-4" />
+                <p className="text-gray-600 mb-4">Your wishlist is empty</p>
+                <Link
+                  to="/products"
+                  className="inline-block py-3 px-6 font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
+                  onClick={() => setIsMobileWishlistDrawer(false)}
+                >
+                  Browse Products
+                </Link>
+              </div>
             )}
           </div>
         </div>
@@ -409,9 +434,9 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
           />
         )}
         <div className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-50 md:hidden transform transition-transform duration-300 ${isMobileBasketDrawer ? 'translate-x-0' : 'translate-x-full'}`}>
-          <div className="p-6">
+          <div className="p-6 h-full flex flex-col">
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xl font-bold text-gray-900">Basket</h3>
+              <h3 className="text-xl font-bold text-gray-900">Shopping Cart ({getCartCount()})</h3>
               <button 
                 onClick={() => setIsMobileBasketDrawer(false)}
                 className="p-2 hover:bg-gray-100 rounded-lg"
@@ -419,57 +444,56 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
                 <X size={24} />
               </button>
             </div>
-            {isAuthenticated && user ? (
+            
+            {cartItems.length > 0 ? (
               <>
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 gradient-brand rounded-full text-white">
-                    <User size={20} />
+                <div className="flex-1 overflow-y-auto space-y-3 mb-4">
+                  {cartItems.map(item => (
+                    <div key={item.productId || item._id} className="flex items-center gap-3 p-2 bg-gray-50 rounded-lg">
+                      <div className="w-12 h-12 bg-gradient-to-br from-[#0ea7e0]/20 to-[#5631cf]/20 rounded flex items-center justify-center flex-shrink-0">
+                        <ShoppingBasket size={16} className="text-[#0ea7e0]" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-gray-900 truncate">{item.name}</p>
+                        <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
+                        <p className="text-sm text-[#0ea7e0] font-semibold">${(item.price * item.quantity).toFixed(2)}</p>
+                      </div>
+                      <button 
+                        onClick={() => removeFromCart(item.productId || item._id)}
+                        className="p-1 text-gray-400 hover:text-red-500 transition-colors"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <div className="border-t border-gray-200 pt-4">
+                  <div className="flex justify-between items-center mb-4">
+                    <span className="font-semibold text-gray-900">Total:</span>
+                    <span className="text-xl font-bold bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] bg-clip-text text-transparent">
+                      ${getCartTotal().toFixed(2)}
+                    </span>
                   </div>
-                  <div>
-                    <p className="font-bold text-gray-900">{user.name}</p>
-                    <p className="text-xs text-gray-600">{user.email}</p>
-                  </div>
+                  <button
+                    className="w-full py-3 px-4 font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
+                    onClick={() => setIsMobileBasketDrawer(false)}
+                  >
+                    Checkout
+                  </button>
                 </div>
-                <div className="bg-green-50 p-4 rounded-lg mb-4">
-                  <p className="text-gray-700 font-medium">Welcome back, {user.name.split(' ')[0]}! 👋</p>
-                  <p className="text-sm text-gray-600 mt-1">Your basket is ready for shopping.</p>
-                </div>
-                <div className="pt-4 border-t border-gray-200 mb-4 flex items-center gap-2 text-sm text-gray-600">
-                  <ShoppingBasket size={18} />
-                  <span>See samples, rewards, and promos in <Link to="/basket" className="text-brand-light hover:underline">basket</Link>.</span>
-                </div>
-                <Link
-                  to="/account"
-                  className="block py-3 px-4 text-center font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
-                  onClick={() => setIsMobileBasketDrawer(false)}
-                >
-                  View My Account
-                </Link>
               </>
             ) : (
-              <>
-                <p className="text-center text-gray-900 font-medium mb-6">Sign in to see items you may have added previously.</p>
-                <div className="flex flex-col gap-3 mb-4">
-                  <Link
-                    to="/login"
-                    className="py-3 px-4 text-center font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
-                    onClick={() => setIsMobileBasketDrawer(false)}
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    to="/register"
-                    className="py-3 px-4 text-center font-semibold border-2 border-transparent hover:border-brand-light text-gray-900 rounded-lg transition-colors"
-                    onClick={() => setIsMobileBasketDrawer(false)}
-                  >
-                    Create Account
-                  </Link>
-                </div>
-                <div className="pt-4 border-t border-gray-200 flex items-center gap-2 text-sm text-gray-600">
-                  <ShoppingBasket size={18} />
-                  <span>See samples, rewards, and promos in <Link to="/basket" className="text-brand-light hover:underline">basket</Link>.</span>
-                </div>
-              </>
+              <div className="text-center py-8">
+                <ShoppingBasket size={48} className="mx-auto text-gray-300 mb-4" />
+                <p className="text-gray-600 mb-4">Your cart is empty</p>
+                <Link
+                  to="/products"
+                  className="inline-block py-3 px-6 font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
+                  onClick={() => setIsMobileBasketDrawer(false)}
+                >
+                  Start Shopping
+                </Link>
+              </div>
             )}
           </div>
         </div>

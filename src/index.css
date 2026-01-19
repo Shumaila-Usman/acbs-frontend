@@ -27,6 +27,14 @@
   animation: scrollInfinite 30s linear infinite;
 }
 
+.animate-scroll-slow {
+  animation: scrollInfinite 60s linear infinite;
+}
+
+.animate-scroll-slow:hover {
+  animation-play-state: paused;
+}
+
 /* Scroll Animation Styles */
 @keyframes fadeInUp {
   from {
@@ -103,5 +111,34 @@
 
 .scroll-animate-scale.visible {
   animation: scaleIn 0.6s ease-out forwards;
+}
+
+/* Modal Animations */
+@keyframes fadeInModal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleInModal {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeInModal 0.3s ease-out forwards;
+}
+
+.animate-scaleIn {
+  animation: scaleInModal 0.3s ease-out forwards;
 }
 
