@@ -81,7 +81,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Check if user is a dealer
-  const isDealer = user?.role === 'dealer' || user?.isDealer === true;
+  const isDealer = user?.role === 'dealer' || user?.isDealer === true || user?.dealerId !== undefined || user?.dealerID !== undefined;
 
   return (
     <AuthContext.Provider 

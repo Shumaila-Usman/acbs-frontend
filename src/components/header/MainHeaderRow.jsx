@@ -92,7 +92,7 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
             </form>
 
             {/* Wishlist/Heart Icon - Only for Dealers */}
-            {isDealer && (
+            {(isDealer || (user && (user.role === 'dealer' || user.isDealer || user.dealerId || user.dealerID))) && (
               <div ref={wishlistRef} className="relative">
                 <button 
                   className="p-2 hover:bg-gray-100 rounded-lg transition-colors group relative"
@@ -163,7 +163,7 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
             )}
 
             {/* Basket/Cart Icon - Only for Dealers */}
-            {isDealer && (
+            {(isDealer || (user && (user.role === 'dealer' || user.isDealer || user.dealerId || user.dealerID))) && (
               <div ref={basketRef} className="relative">
                 <button 
                   className="p-2 hover:bg-gray-100 rounded-lg transition-colors group relative"
@@ -307,7 +307,7 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
         {/* Mobile Search Bar with Heart & Basket on Left (Dealers Only) */}
         <div className="mt-2 md:hidden flex items-center gap-2">
           {/* Heart Icon - Only for Dealers */}
-          {isDealer && (
+          {(isDealer || (user && (user.role === 'dealer' || user.isDealer || user.dealerId || user.dealerID))) && (
             <button 
               onClick={() => setIsMobileWishlistDrawer(true)}
               onTouchStart={() => setIsMobileWishlistHover(true)}
@@ -327,7 +327,7 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
           )}
 
           {/* Basket Icon - Only for Dealers */}
-          {isDealer && (
+          {(isDealer || (user && (user.role === 'dealer' || user.isDealer || user.dealerId || user.dealerID))) && (
             <button 
               onClick={() => setIsMobileBasketDrawer(true)}
               onTouchStart={() => setIsMobileBasketHover(true)}
@@ -369,7 +369,7 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
       </div>
 
       {/* Mobile Wishlist Drawer - Only for Dealers */}
-      {isDealer && (
+      {(isDealer || (user && (user.role === 'dealer' || user.isDealer || user.dealerId || user.dealerID))) && (
         <>
           {isMobileWishlistDrawer && (
             <div 
@@ -437,7 +437,7 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
       )}
 
       {/* Mobile Basket Drawer - Only for Dealers */}
-      {isDealer && (
+      {(isDealer || (user && (user.role === 'dealer' || user.isDealer || user.dealerId || user.dealerID))) && (
         <>
           {isMobileBasketDrawer && (
             <div 
