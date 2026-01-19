@@ -140,10 +140,10 @@ const RegisterDropdown = () => {
     <div className="md:hidden">
       <button
         onClick={() => setIsMobileDrawerOpen(true)}
-        className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-lg transition-colors"
+        className="flex items-center gap-1 p-2 hover:bg-gray-100 rounded-lg transition-colors"
+        aria-label="Account"
       >
-        <User size={20} />
-        <span className="font-medium text-sm">{isAuthenticated && user ? user.name.split(' ')[0] : 'Register'}</span>
+        <User size={22} />
       </button>
 
       {/* Overlay */}

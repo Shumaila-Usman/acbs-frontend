@@ -4,7 +4,7 @@ import { ChevronRight } from 'lucide-react';
 
 const MegaMenu = ({ category }) => {
   return (
-    <div className="fixed left-0 right-0 bg-white shadow-xl border-t border-gray-200 z-50 animate-fadeIn" style={{ top: 'var(--nav-offset, 180px)' }}>
+    <div className="absolute left-1/2 -translate-x-1/2 w-screen bg-white shadow-xl border-t border-gray-200 z-50 animate-fadeIn" style={{ top: '100%' }}>
       <div className="max-w-7xl mx-auto px-[50px] py-10">
         <div className="grid grid-cols-6 gap-x-10">
           {category.columns.map((column, colIndex) => (

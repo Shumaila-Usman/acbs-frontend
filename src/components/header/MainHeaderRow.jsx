@@ -46,27 +46,27 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
   return (
     <div className="bg-white border-b border-gray-200">
       <div className={`max-w-7xl mx-auto px-4 md:px-[50px] transition-all duration-300 ${isLogoHovered ? 'py-1' : 'py-2'}`}>
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center justify-between gap-4 relative">
           {/* Mobile Menu Button */}
           <button
             onClick={onMobileMenuToggle}
-            className="lg:hidden p-2 hover:bg-gray-100 rounded-lg"
+            className="lg:hidden p-2 hover:bg-gray-100 rounded-lg flex-shrink-0"
             aria-label="Menu"
           >
             <Menu size={24} />
           </button>
 
-          {/* Logo */}
+          {/* Logo - Centered on mobile */}
           <Link 
             to="/" 
-            className="flex items-center"
+            className="flex items-center lg:flex-none absolute left-1/2 transform -translate-x-1/2 lg:static lg:transform-none"
             onMouseEnter={() => setIsLogoHovered(true)}
             onMouseLeave={() => setIsLogoHovered(false)}
           >
             <img 
               src="/logo.jpg" 
               alt="ACBS - Allied Concept Beauty Supply" 
-              className={`h-16 md:h-20 w-auto object-contain transition-transform duration-300 ${isLogoHovered ? 'scale-110' : 'scale-100'}`}
+              className={`h-14 md:h-20 w-auto object-contain transition-transform duration-300 ${isLogoHovered ? 'scale-110' : 'scale-100'}`}
             />
           </Link>
 
@@ -294,7 +294,7 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
           </div>
 
           {/* Mobile Register Icon Only */}
-          <div className="flex md:hidden items-center">
+          <div className="flex lg:hidden items-center flex-shrink-0">
             <RegisterDropdown />
           </div>
         </div>
