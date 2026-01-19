@@ -55,21 +55,21 @@ const AuthPage = () => {
     special: /[!@#$%^&*(),.?":{}|<>]/.test(registerData.password)
   };
 
-  const isPasswordStrong = Object.values(passwordChecks).every(check => check);
-
   const handleLoginChange = (e) => {
-    setLoginData({
-      ...loginData,
-      [e.target.name]: e.target.value
-    });
+    const { name, value } = e.target;
+    setLoginData(prev => ({
+      ...prev,
+      [name]: value
+    }));
     setLoginError('');
   };
 
   const handleRegisterChange = (e) => {
-    setRegisterData({
-      ...registerData,
-      [e.target.name]: e.target.value
-    });
+    const { name, value } = e.target;
+    setRegisterData(prev => ({
+      ...prev,
+      [name]: value
+    }));
     setRegisterError('');
   };
 
@@ -116,20 +116,17 @@ const AuthPage = () => {
     e.preventDefault();
     setRegisterError('');
 
-    // Validate password strength
     const passwordError = validatePassword();
     if (passwordError) {
       setRegisterError(passwordError);
       return;
     }
 
-    // Validate passwords match
     if (registerData.password !== registerData.confirmPassword) {
       setRegisterError('Passwords do not match');
       return;
     }
 
-    // Validate phone format (basic)
     if (registerData.phone && !/^\+?[\d\s\-()]+$/.test(registerData.phone)) {
       setRegisterError('Please enter a valid phone number');
       return;
@@ -149,11 +146,11 @@ const AuthPage = () => {
       if (result.success) {
         navigate('/account');
       } else {
-        setRegisterError(result.message || 'Registration failed. Please ensure the backend server is running.');
+        setRegisterError(result.message || 'Registration failed.');
       }
     } catch (err) {
       console.error('Registration error:', err);
-      setRegisterError('Cannot connect to server. Please ensure the backend is running on http://localhost:5000');
+      setRegisterError('Cannot connect to server.');
     } finally {
       setRegisterLoading(false);
     }
@@ -169,242 +166,214 @@ const AuthPage = () => {
     navigate('/login', { replace: true });
   };
 
-  // Mobile Login Form Component
-  const MobileLoginForm = () => (
-    <div className={`w-full max-w-md mx-auto bg-white rounded-2xl shadow-xl p-6 sm:p-8 transition-all duration-500 ease-out ${isAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-      <h2 className="text-3xl font-bold text-center mb-2 bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] bg-clip-text text-transparent">
-        Login
-      </h2>
-      <p className="text-center text-gray-600 mb-6">Sign in to your account</p>
-
-      {loginError && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">
-          {loginError}
-        </div>
-      )}
-
-      <form onSubmit={handleLoginSubmit} className="space-y-4">
-        <div>
-          <input
-            type="email"
-            name="email"
-            value={loginData.email}
-            onChange={handleLoginChange}
-            required
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea7e0] focus:border-transparent"
-            placeholder="Email"
-          />
-        </div>
-
-        <div>
-          <input
-            type="password"
-            name="password"
-            value={loginData.password}
-            onChange={handleLoginChange}
-            required
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea7e0] focus:border-transparent"
-            placeholder="Password"
-          />
-        </div>
-
-        <div className="flex items-center justify-between text-sm">
-          <label className="flex items-center">
-            <input type="checkbox" className="mr-2 rounded" />
-            <span className="text-gray-600">Remember me</span>
-          </label>
-          <a href="#" className="text-[#0ea7e0] hover:text-[#5631cf] font-medium">
-            Forgot Password?
-          </a>
-        </div>
-
-        <button
-          type="submit"
-          disabled={loginLoading}
-          className="w-full py-3 gradient-brand text-white font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {loginLoading ? 'Signing In...' : 'Login'}
-        </button>
-      </form>
-
-      <div className="mt-6 text-center">
-        <p className="text-gray-600">
-          Don't have an account?{' '}
-          <Link to="/register" className="text-[#0ea7e0] hover:text-[#5631cf] font-semibold">
-            Register
-          </Link>
-        </p>
-      </div>
-    </div>
-  );
-
-  // Mobile Register Form Component
-  const MobileRegisterForm = () => (
-    <div className={`w-full max-w-md mx-auto bg-white rounded-2xl shadow-xl p-6 sm:p-8 transition-all duration-500 ease-out ${isAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-      <h2 className="text-3xl font-bold text-center mb-2 bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] bg-clip-text text-transparent">
-        Registration
-      </h2>
-      <p className="text-center text-gray-600 mb-6">Create your account</p>
-
-      {registerError && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">
-          {registerError}
-        </div>
-      )}
-
-      <form onSubmit={handleRegisterSubmit} className="space-y-4">
-        <div className="grid grid-cols-2 gap-3">
-          <input
-            type="text"
-            name="firstName"
-            value={registerData.firstName}
-            onChange={handleRegisterChange}
-            required
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea7e0] focus:border-transparent"
-            placeholder="First Name"
-          />
-          <input
-            type="text"
-            name="lastName"
-            value={registerData.lastName}
-            onChange={handleRegisterChange}
-            required
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea7e0] focus:border-transparent"
-            placeholder="Last Name"
-          />
-        </div>
-
-        <input
-          type="email"
-          name="email"
-          value={registerData.email}
-          onChange={handleRegisterChange}
-          required
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea7e0] focus:border-transparent"
-          placeholder="Email"
-        />
-
-        <input
-          type="tel"
-          name="phone"
-          value={registerData.phone}
-          onChange={handleRegisterChange}
-          required
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea7e0] focus:border-transparent"
-          placeholder="Phone Number"
-        />
-
-        <div>
-          <input
-            type="password"
-            name="password"
-            value={registerData.password}
-            onChange={handleRegisterChange}
-            onFocus={() => setPasswordFocused(true)}
-            required
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea7e0] focus:border-transparent"
-            placeholder="Password"
-          />
-          
-          {/* Password Strength Indicator */}
-          {passwordFocused && registerData.password && (
-            <div className="mt-2 p-3 bg-gray-50 rounded-lg text-xs space-y-1">
-              <div className="space-y-1">
-                <div className="flex items-center gap-1">
-                  {passwordChecks.length ? (
-                    <CheckCircle size={12} className="text-green-500" />
-                  ) : (
-                    <XCircle size={12} className="text-red-500" />
-                  )}
-                  <span className={passwordChecks.length ? 'text-green-700' : 'text-gray-600'}>
-                    8+ characters
-                  </span>
-                </div>
-                <div className="flex items-center gap-1">
-                  {passwordChecks.uppercase ? (
-                    <CheckCircle size={12} className="text-green-500" />
-                  ) : (
-                    <XCircle size={12} className="text-red-500" />
-                  )}
-                  <span className={passwordChecks.uppercase ? 'text-green-700' : 'text-gray-600'}>
-                    Uppercase (A-Z)
-                  </span>
-                </div>
-                <div className="flex items-center gap-1">
-                  {passwordChecks.lowercase ? (
-                    <CheckCircle size={12} className="text-green-500" />
-                  ) : (
-                    <XCircle size={12} className="text-red-500" />
-                  )}
-                  <span className={passwordChecks.lowercase ? 'text-green-700' : 'text-gray-600'}>
-                    Lowercase (a-z)
-                  </span>
-                </div>
-                <div className="flex items-center gap-1">
-                  {passwordChecks.number ? (
-                    <CheckCircle size={12} className="text-green-500" />
-                  ) : (
-                    <XCircle size={12} className="text-red-500" />
-                  )}
-                  <span className={passwordChecks.number ? 'text-green-700' : 'text-gray-600'}>
-                    Number (0-9)
-                  </span>
-                </div>
-                <div className="flex items-center gap-1">
-                  {passwordChecks.special ? (
-                    <CheckCircle size={12} className="text-green-500" />
-                  ) : (
-                    <XCircle size={12} className="text-red-500" />
-                  )}
-                  <span className={passwordChecks.special ? 'text-green-700' : 'text-gray-600'}>
-                    Special character (!@#$%^&*)
-                  </span>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-
-        <input
-          type="password"
-          name="confirmPassword"
-          value={registerData.confirmPassword}
-          onChange={handleRegisterChange}
-          required
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea7e0] focus:border-transparent"
-          placeholder="Confirm Password"
-        />
-
-        <button
-          type="submit"
-          disabled={registerLoading}
-          className="w-full py-3 gradient-brand text-white font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {registerLoading ? 'Creating Account...' : 'Register'}
-        </button>
-      </form>
-
-      <div className="mt-6 text-center">
-        <p className="text-gray-600">
-          Already have an account?{' '}
-          <Link to="/login" className="text-[#0ea7e0] hover:text-[#5631cf] font-semibold">
-            Login
-          </Link>
-        </p>
-      </div>
-    </div>
-  );
-
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-4 sm:py-8 lg:py-12">
-      {/* Mobile View - Simple Forms */}
+      {/* Mobile View - Simple Forms (Inline, not as function components) */}
       <div className="lg:hidden w-full">
-        {isLoginActive ? <MobileLoginForm /> : <MobileRegisterForm />}
+        {isLoginActive ? (
+          /* Mobile Login Form - Inline */
+          <div className={`w-full max-w-md mx-auto bg-white rounded-2xl shadow-xl p-6 sm:p-8 transition-all duration-500 ease-out ${isAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <h2 className="text-3xl font-bold text-center mb-2 bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] bg-clip-text text-transparent">
+              Login
+            </h2>
+            <p className="text-center text-gray-600 mb-6">Sign in to your account</p>
+
+            {loginError && (
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">
+                {loginError}
+              </div>
+            )}
+
+            <form onSubmit={handleLoginSubmit} className="space-y-4">
+              <div>
+                <input
+                  type="email"
+                  name="email"
+                  value={loginData.email}
+                  onChange={handleLoginChange}
+                  required
+                  autoComplete="email"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea7e0] focus:border-transparent"
+                  placeholder="Email"
+                />
+              </div>
+
+              <div>
+                <input
+                  type="password"
+                  name="password"
+                  value={loginData.password}
+                  onChange={handleLoginChange}
+                  required
+                  autoComplete="current-password"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea7e0] focus:border-transparent"
+                  placeholder="Password"
+                />
+              </div>
+
+              <div className="flex items-center justify-between text-sm">
+                <label className="flex items-center">
+                  <input type="checkbox" className="mr-2 rounded" />
+                  <span className="text-gray-600">Remember me</span>
+                </label>
+                <a href="#" className="text-[#0ea7e0] hover:text-[#5631cf] font-medium">
+                  Forgot Password?
+                </a>
+              </div>
+
+              <button
+                type="submit"
+                disabled={loginLoading}
+                className="w-full py-3 gradient-brand text-white font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {loginLoading ? 'Signing In...' : 'Login'}
+              </button>
+            </form>
+
+            <div className="mt-6 text-center">
+              <p className="text-gray-600">
+                Don't have an account?{' '}
+                <Link to="/register" className="text-[#0ea7e0] hover:text-[#5631cf] font-semibold">
+                  Register
+                </Link>
+              </p>
+            </div>
+          </div>
+        ) : (
+          /* Mobile Register Form - Inline */
+          <div className={`w-full max-w-md mx-auto bg-white rounded-2xl shadow-xl p-6 sm:p-8 transition-all duration-500 ease-out ${isAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <h2 className="text-3xl font-bold text-center mb-2 bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] bg-clip-text text-transparent">
+              Registration
+            </h2>
+            <p className="text-center text-gray-600 mb-6">Create your account</p>
+
+            {registerError && (
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">
+                {registerError}
+              </div>
+            )}
+
+            <form onSubmit={handleRegisterSubmit} className="space-y-4">
+              <div className="grid grid-cols-2 gap-3">
+                <input
+                  type="text"
+                  name="firstName"
+                  value={registerData.firstName}
+                  onChange={handleRegisterChange}
+                  required
+                  autoComplete="given-name"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea7e0] focus:border-transparent"
+                  placeholder="First Name"
+                />
+                <input
+                  type="text"
+                  name="lastName"
+                  value={registerData.lastName}
+                  onChange={handleRegisterChange}
+                  required
+                  autoComplete="family-name"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea7e0] focus:border-transparent"
+                  placeholder="Last Name"
+                />
+              </div>
+
+              <input
+                type="email"
+                name="email"
+                value={registerData.email}
+                onChange={handleRegisterChange}
+                required
+                autoComplete="email"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea7e0] focus:border-transparent"
+                placeholder="Email"
+              />
+
+              <input
+                type="tel"
+                name="phone"
+                value={registerData.phone}
+                onChange={handleRegisterChange}
+                required
+                autoComplete="tel"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea7e0] focus:border-transparent"
+                placeholder="Phone Number"
+              />
+
+              <div>
+                <input
+                  type="password"
+                  name="password"
+                  value={registerData.password}
+                  onChange={handleRegisterChange}
+                  onFocus={() => setPasswordFocused(true)}
+                  required
+                  autoComplete="new-password"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea7e0] focus:border-transparent"
+                  placeholder="Password"
+                />
+                
+                {passwordFocused && registerData.password && (
+                  <div className="mt-2 p-3 bg-gray-50 rounded-lg text-xs space-y-1">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-1">
+                        {passwordChecks.length ? <CheckCircle size={12} className="text-green-500" /> : <XCircle size={12} className="text-red-500" />}
+                        <span className={passwordChecks.length ? 'text-green-700' : 'text-gray-600'}>8+ characters</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        {passwordChecks.uppercase ? <CheckCircle size={12} className="text-green-500" /> : <XCircle size={12} className="text-red-500" />}
+                        <span className={passwordChecks.uppercase ? 'text-green-700' : 'text-gray-600'}>Uppercase (A-Z)</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        {passwordChecks.lowercase ? <CheckCircle size={12} className="text-green-500" /> : <XCircle size={12} className="text-red-500" />}
+                        <span className={passwordChecks.lowercase ? 'text-green-700' : 'text-gray-600'}>Lowercase (a-z)</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        {passwordChecks.number ? <CheckCircle size={12} className="text-green-500" /> : <XCircle size={12} className="text-red-500" />}
+                        <span className={passwordChecks.number ? 'text-green-700' : 'text-gray-600'}>Number (0-9)</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        {passwordChecks.special ? <CheckCircle size={12} className="text-green-500" /> : <XCircle size={12} className="text-red-500" />}
+                        <span className={passwordChecks.special ? 'text-green-700' : 'text-gray-600'}>Special character</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <input
+                type="password"
+                name="confirmPassword"
+                value={registerData.confirmPassword}
+                onChange={handleRegisterChange}
+                required
+                autoComplete="new-password"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea7e0] focus:border-transparent"
+                placeholder="Confirm Password"
+              />
+
+              <button
+                type="submit"
+                disabled={registerLoading}
+                className="w-full py-3 gradient-brand text-white font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {registerLoading ? 'Creating Account...' : 'Register'}
+              </button>
+            </form>
+
+            <div className="mt-6 text-center">
+              <p className="text-gray-600">
+                Already have an account?{' '}
+                <Link to="/login" className="text-[#0ea7e0] hover:text-[#5631cf] font-semibold">
+                  Login
+                </Link>
+              </p>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Desktop View - Sliding Panel Design */}
       <div className={`hidden lg:block relative w-full max-w-4xl min-h-[600px] bg-white rounded-2xl shadow-2xl overflow-hidden transition-all duration-500 ease-out ${isAnimated ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
-        {/* Forms Container */}
         <div className="flex h-full min-h-[600px]">
           {/* Login Form - Left Side */}
           <div className={`w-1/2 p-8 flex flex-col justify-center transition-all duration-700 ${isLoginActive ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
@@ -421,44 +390,37 @@ const AuthPage = () => {
               )}
 
               <form onSubmit={handleLoginSubmit} className="space-y-4">
-                <div>
-                  <input
-                    type="email"
-                    name="email"
-                    value={loginData.email}
-                    onChange={handleLoginChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea7e0] focus:border-transparent"
-                    placeholder="Email"
-                  />
-                </div>
-
-                <div>
-                  <input
-                    type="password"
-                    name="password"
-                    value={loginData.password}
-                    onChange={handleLoginChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea7e0] focus:border-transparent"
-                    placeholder="Password"
-                  />
-                </div>
-
+                <input
+                  type="email"
+                  name="email"
+                  value={loginData.email}
+                  onChange={handleLoginChange}
+                  required
+                  autoComplete="email"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea7e0] focus:border-transparent"
+                  placeholder="Email"
+                />
+                <input
+                  type="password"
+                  name="password"
+                  value={loginData.password}
+                  onChange={handleLoginChange}
+                  required
+                  autoComplete="current-password"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea7e0] focus:border-transparent"
+                  placeholder="Password"
+                />
                 <div className="flex items-center justify-between text-sm">
                   <label className="flex items-center">
                     <input type="checkbox" className="mr-2 rounded" />
                     <span className="text-gray-600">Remember me</span>
                   </label>
-                  <a href="#" className="text-[#0ea7e0] hover:text-[#5631cf] font-medium">
-                    Forgot Password?
-                  </a>
+                  <a href="#" className="text-[#0ea7e0] hover:text-[#5631cf] font-medium">Forgot Password?</a>
                 </div>
-
                 <button
                   type="submit"
                   disabled={loginLoading}
-                  className="w-full py-3 gradient-brand text-white font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full py-3 gradient-brand text-white font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50"
                 >
                   {loginLoading ? 'Signing In...' : 'Login'}
                 </button>
@@ -488,6 +450,7 @@ const AuthPage = () => {
                     value={registerData.firstName}
                     onChange={handleRegisterChange}
                     required
+                    autoComplete="given-name"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea7e0] focus:border-transparent"
                     placeholder="First Name"
                   />
@@ -497,116 +460,56 @@ const AuthPage = () => {
                     value={registerData.lastName}
                     onChange={handleRegisterChange}
                     required
+                    autoComplete="family-name"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea7e0] focus:border-transparent"
                     placeholder="Last Name"
                   />
                 </div>
-
                 <input
                   type="email"
                   name="email"
                   value={registerData.email}
                   onChange={handleRegisterChange}
                   required
+                  autoComplete="email"
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea7e0] focus:border-transparent"
                   placeholder="Email"
                 />
-
                 <input
                   type="tel"
                   name="phone"
                   value={registerData.phone}
                   onChange={handleRegisterChange}
                   required
+                  autoComplete="tel"
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea7e0] focus:border-transparent"
                   placeholder="Phone Number"
                 />
-
-                <div>
-                  <input
-                    type="password"
-                    name="password"
-                    value={registerData.password}
-                    onChange={handleRegisterChange}
-                    onFocus={() => setPasswordFocused(true)}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea7e0] focus:border-transparent"
-                    placeholder="Password"
-                  />
-                  
-                  {/* Password Strength Indicator */}
-                  {passwordFocused && registerData.password && (
-                    <div className="mt-2 p-2 bg-gray-50 rounded-lg text-xs space-y-1">
-                      <div className="grid grid-cols-2 gap-1">
-                        <div className="flex items-center gap-1">
-                          {passwordChecks.length ? (
-                            <CheckCircle size={12} className="text-green-500" />
-                          ) : (
-                            <XCircle size={12} className="text-red-500" />
-                          )}
-                          <span className={passwordChecks.length ? 'text-green-700' : 'text-gray-600'}>
-                            8+ characters
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          {passwordChecks.uppercase ? (
-                            <CheckCircle size={12} className="text-green-500" />
-                          ) : (
-                            <XCircle size={12} className="text-red-500" />
-                          )}
-                          <span className={passwordChecks.uppercase ? 'text-green-700' : 'text-gray-600'}>
-                            Uppercase (A-Z)
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          {passwordChecks.lowercase ? (
-                            <CheckCircle size={12} className="text-green-500" />
-                          ) : (
-                            <XCircle size={12} className="text-red-500" />
-                          )}
-                          <span className={passwordChecks.lowercase ? 'text-green-700' : 'text-gray-600'}>
-                            Lowercase (a-z)
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          {passwordChecks.number ? (
-                            <CheckCircle size={12} className="text-green-500" />
-                          ) : (
-                            <XCircle size={12} className="text-red-500" />
-                          )}
-                          <span className={passwordChecks.number ? 'text-green-700' : 'text-gray-600'}>
-                            Number (0-9)
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-1 col-span-2">
-                          {passwordChecks.special ? (
-                            <CheckCircle size={12} className="text-green-500" />
-                          ) : (
-                            <XCircle size={12} className="text-red-500" />
-                          )}
-                          <span className={passwordChecks.special ? 'text-green-700' : 'text-gray-600'}>
-                            Special character (!@#$%^&*)
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
+                <input
+                  type="password"
+                  name="password"
+                  value={registerData.password}
+                  onChange={handleRegisterChange}
+                  onFocus={() => setPasswordFocused(true)}
+                  required
+                  autoComplete="new-password"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea7e0] focus:border-transparent"
+                  placeholder="Password"
+                />
                 <input
                   type="password"
                   name="confirmPassword"
                   value={registerData.confirmPassword}
                   onChange={handleRegisterChange}
                   required
+                  autoComplete="new-password"
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea7e0] focus:border-transparent"
                   placeholder="Confirm Password"
                 />
-
                 <button
                   type="submit"
                   disabled={registerLoading}
-                  className="w-full py-3 gradient-brand text-white font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full py-3 gradient-brand text-white font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50"
                 >
                   {registerLoading ? 'Creating Account...' : 'Register'}
                 </button>

@@ -1,7 +1,18 @@
 import axios from 'axios';
 
-// Use environment variable for API URL, fallback to localhost for development
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+// Dynamically determine API URL based on current host
+const getApiBaseUrl = () => {
+  // If environment variable is set, use it
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+  
+  // For development: use the same host as the frontend but on port 5000
+  const currentHost = window.location.hostname;
+  return `http://${currentHost}:5000/api`;
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 // Create axios instance
 const api = axios.create({
@@ -49,7 +60,7 @@ export const authAPI = {
   },
 };
 
+// Export the base URL for use in other files
+export const API_URL = API_BASE_URL;
+
 export default api;
-
-
-

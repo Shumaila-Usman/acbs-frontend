@@ -6,7 +6,16 @@ import ScrollAnimation from '../components/ScrollAnimation';
 import ProductQuickView from '../components/ProductQuickView';
 import { useCart } from '../context/CartContext';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+// Dynamically determine API URL based on current host
+const getApiUrl = () => {
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+  const currentHost = window.location.hostname;
+  return `http://${currentHost}:5000/api`;
+};
+
+const API_URL = getApiUrl();
 
 const ProductCard = ({ product, viewMode, onQuickView }) => {
   const [isHovered, setIsHovered] = useState(false);

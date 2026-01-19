@@ -10,23 +10,29 @@ const productRoutes = require('./routes/products');
 const app = express();
 
 // Middleware
-// Allow requests from both localhost and production Vercel domain
-const allowedOrigins = [
-  'http://localhost:5173',
-  'https://localhost:5173',
-  process.env.FRONTEND_URL // Add your Vercel URL as environment variable
-].filter(Boolean); // Remove undefined values
-
+// Allow requests from localhost, local network IPs, and production Vercel domain
 app.use(cors({
   origin: function(origin, callback) {
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
     
-    if (allowedOrigins.indexOf(origin) !== -1 || origin.endsWith('.vercel.app')) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
+    // Allow localhost
+    if (origin.includes('localhost')) return callback(null, true);
+    
+    // Allow local network IPs (192.168.x.x, 10.x.x.x, 172.16-31.x.x)
+    if (origin.match(/^https?:\/\/(192\.168\.|10\.|172\.(1[6-9]|2[0-9]|3[01])\.)/)) {
+      return callback(null, true);
     }
+    
+    // Allow Vercel domains
+    if (origin.endsWith('.vercel.app')) return callback(null, true);
+    
+    // Allow FRONTEND_URL from env
+    if (process.env.FRONTEND_URL && origin === process.env.FRONTEND_URL) {
+      return callback(null, true);
+    }
+    
+    callback(new Error('Not allowed by CORS'));
   },
   credentials: true
 }));
