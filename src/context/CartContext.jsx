@@ -112,6 +112,7 @@ export const CartProvider = ({ children }) => {
         addToCart,
         removeFromCart,
         updateCartQuantity,
+        updateQuantity: updateCartQuantity,
         clearCart,
         addToWishlist,
         removeFromWishlist,

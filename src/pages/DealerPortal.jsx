@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useCart } from '../context/CartContext';
 import { ShoppingCart, Package, User, Mail, LogOut } from 'lucide-react';
 import axios from 'axios';
 import ScrollAnimation from '../components/ScrollAnimation';
@@ -18,6 +19,7 @@ const API_URL = getApiUrl();
 
 const DealerPortal = () => {
   const { user, loading, logout } = useAuth();
+  const { addToCart } = useCart();
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [quantities, setQuantities] = useState({});
@@ -139,8 +141,8 @@ const DealerPortal = () => {
 
   const handleAddToCart = (product) => {
     const productId = product.productId || product._id;
-    const quantity = quantities[productId] || 1;
-    alert(`Added ${quantity} x ${product.name} to cart`);
+    const quantity = parseInt(quantities[productId] || 1, 10);
+    addToCart(product, quantity);
   };
 
   const paginate = (pageNumber) => {

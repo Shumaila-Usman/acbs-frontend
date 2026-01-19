@@ -135,25 +135,25 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
                               </div>
                             ))}
                           </div>
-                          <Link
-                            to="/products"
-                            className="block py-2 px-4 text-center font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
-                            onClick={() => setIsWishlistOpen(false)}
-                          >
-                            Continue Shopping
-                          </Link>
+                        <Link
+                          to={isDealer || (user && (user.role === 'dealer' || user.isDealer || user.dealerId || user.dealerID)) ? "/dealer-portal" : "/products"}
+                          className="block py-2 px-4 text-center font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
+                          onClick={() => setIsWishlistOpen(false)}
+                        >
+                          Continue Shopping
+                        </Link>
                         </>
                       ) : (
                         <div className="text-center py-6">
                           <Heart size={40} className="mx-auto text-gray-300 mb-3" />
                           <p className="text-gray-600 mb-4">Your wishlist is empty</p>
-                          <Link
-                            to="/products"
-                            className="inline-block py-2 px-4 font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
-                            onClick={() => setIsWishlistOpen(false)}
-                          >
-                            Browse Products
-                          </Link>
+                        <Link
+                          to={isDealer || (user && (user.role === 'dealer' || user.isDealer || user.dealerId || user.dealerID)) ? "/dealer-portal" : "/products"}
+                          className="inline-block py-2 px-4 font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
+                          onClick={() => setIsWishlistOpen(false)}
+                        >
+                          Browse Products
+                        </Link>
                         </div>
                       )}
                     </div>
@@ -228,7 +228,7 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
                           <ShoppingBasket size={40} className="mx-auto text-gray-300 mb-3" />
                           <p className="text-gray-600 mb-4">Your cart is empty</p>
                           <Link
-                            to="/products"
+                            to={isDealer || (user && (user.role === 'dealer' || user.isDealer || user.dealerId || user.dealerID)) ? "/dealer-portal" : "/products"}
                             className="inline-block py-2 px-4 font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
                             onClick={() => setIsBasketOpen(false)}
                           >
@@ -411,7 +411,7 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
                     ))}
                   </div>
                   <Link
-                    to="/products"
+                    to={isDealer || (user && (user.role === 'dealer' || user.isDealer || user.dealerId || user.dealerID)) ? "/dealer-portal" : "/products"}
                     className="block py-3 px-4 text-center font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
                     onClick={() => setIsMobileWishlistDrawer(false)}
                   >
@@ -422,13 +422,13 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
                 <div className="text-center py-8">
                   <Heart size={48} className="mx-auto text-gray-300 mb-4" />
                   <p className="text-gray-600 mb-4">Your wishlist is empty</p>
-                  <Link
-                    to="/products"
-                    className="inline-block py-3 px-6 font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
-                    onClick={() => setIsMobileWishlistDrawer(false)}
-                  >
-                    Browse Products
-                  </Link>
+                <Link
+                  to={isDealer || (user && (user.role === 'dealer' || user.isDealer || user.dealerId || user.dealerID)) ? "/dealer-portal" : "/products"}
+                  className="inline-block py-3 px-6 font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
+                  onClick={() => setIsMobileWishlistDrawer(false)}
+                >
+                  Browse Products
+                </Link>
                 </div>
               )}
             </div>
@@ -499,13 +499,13 @@ const MainHeaderRow = ({ onMobileMenuToggle }) => {
                 <div className="text-center py-8">
                   <ShoppingBasket size={48} className="mx-auto text-gray-300 mb-4" />
                   <p className="text-gray-600 mb-4">Your cart is empty</p>
-                  <Link
-                    to="/products"
-                    className="inline-block py-3 px-6 font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
-                    onClick={() => setIsMobileBasketDrawer(false)}
-                  >
-                    Start Shopping
-                  </Link>
+                <Link
+                  to={isDealer || (user && (user.role === 'dealer' || user.isDealer || user.dealerId || user.dealerID)) ? "/dealer-portal" : "/products"}
+                  className="inline-block py-3 px-6 font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
+                  onClick={() => setIsMobileBasketDrawer(false)}
+                >
+                  Start Shopping
+                </Link>
                 </div>
               )}
             </div>

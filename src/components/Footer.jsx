@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Youtube } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 const Footer = () => {
+  const { isDealer, user } = useAuth();
+  const dealerPortalLink = (isDealer || (user && (user.role === 'dealer' || user.isDealer || user.dealerId || user.dealerID))) ? '/dealer-portal' : '/dealer-register';
   return (
     <footer className="bg-gray-900 text-gray-300 pt-12 pb-6">
       <div className="max-w-7xl mx-auto px-4">
@@ -65,7 +68,7 @@ const Footer = () => {
                 <span>Rewards Program</span>
                 <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-gradient-to-r from-brand-light to-brand-dark transition-all duration-300 group-hover:w-full"></span>
               </Link></li>
-              <li><Link to="/dealer-register" className="relative inline-block hover:text-white transition-colors group">
+              <li><Link to={dealerPortalLink} className="relative inline-block hover:text-white transition-colors group">
                 <span>Dealer Portal</span>
                 <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-gradient-to-r from-brand-light to-brand-dark transition-all duration-300 group-hover:w-full"></span>
               </Link></li>

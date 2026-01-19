@@ -171,7 +171,7 @@ const ProductQuickView = ({ product, isOpen, onClose }) => {
             </div>
 
             {/* Price - Only for Dealers */}
-            {isDealer ? (
+            {isDealer && (
               <div className="flex items-baseline gap-3 mb-6">
                 <span className="text-3xl font-bold bg-gradient-to-r from-[#0ea7e0] to-[#0369a1] bg-clip-text text-transparent">
                   ${product.price.toFixed(2)}
@@ -181,11 +181,6 @@ const ProductQuickView = ({ product, isOpen, onClose }) => {
                     ${(product.price * 1.3).toFixed(2)}
                   </span>
                 )}
-              </div>
-            ) : (
-              <div className="mb-6 p-4 bg-gradient-to-r from-[#0ea7e0]/10 to-[#0369a1]/10 rounded-lg">
-                <p className="text-gray-700 font-medium">💼 Dealer Pricing Available</p>
-                <p className="text-sm text-gray-500">Register as a dealer to see prices and place orders</p>
               </div>
             )}
 
