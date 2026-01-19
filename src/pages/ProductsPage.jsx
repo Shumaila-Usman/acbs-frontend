@@ -43,41 +43,47 @@ const ProductCard = ({ product, viewMode, onQuickView }) => {
 
   if (viewMode === 'list') {
     return (
-      <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex">
-        <div className="w-48 h-48 flex-shrink-0 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center relative group">
+      <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col sm:flex-row">
+        {/* Image - Full width on mobile, fixed width on desktop */}
+        <div className="w-full sm:w-40 md:w-48 h-40 sm:h-auto flex-shrink-0 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center relative group">
           <div className="text-center p-4">
-            <div className="w-20 h-20 mx-auto bg-gradient-to-br from-[#0ea7e0]/20 to-[#5631cf]/20 rounded-lg flex items-center justify-center mb-2">
-              <ShoppingCart className="text-[#0ea7e0]" size={32} />
+            <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto bg-gradient-to-br from-[#0ea7e0]/20 to-[#5631cf]/20 rounded-lg flex items-center justify-center">
+              <ShoppingCart className="text-[#0ea7e0]" size={28} />
             </div>
           </div>
+          {/* Badge on image */}
+          {product.badge && (
+            <div className="absolute top-2 left-2">
+              <span className="text-xs font-bold text-white bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] px-2 py-1 rounded-full shadow">
+                {product.badge}
+              </span>
+            </div>
+          )}
           {/* Quick View Button */}
           <button 
             onClick={handleQuickView}
             className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
           >
-            <Eye className="text-white" size={32} />
+            <Eye className="text-white" size={28} />
           </button>
         </div>
-        <div className="flex-1 p-6 flex flex-col justify-between">
+        
+        {/* Content */}
+        <div className="flex-1 p-4 sm:p-5 flex flex-col justify-between">
           <div>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-xs font-semibold text-[#0ea7e0] uppercase tracking-wide bg-[#0ea7e0]/10 px-2 py-1 rounded">
-                {product.subcategory}
-              </span>
-              {product.badge && (
-                <span className="text-xs font-semibold text-white bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] px-2 py-1 rounded">
-                  {product.badge}
-                </span>
-              )}
-            </div>
-            <h3 className="font-bold text-gray-900 text-lg mb-2">{product.name}</h3>
-            <p className="text-gray-600 text-sm">{product.description}</p>
+            <span className="text-xs font-semibold text-[#0ea7e0] uppercase tracking-wide">
+              {product.subcategory}
+            </span>
+            <h3 className="font-bold text-gray-900 text-base sm:text-lg mt-1 mb-1 line-clamp-2">{product.name}</h3>
+            <p className="text-gray-600 text-sm line-clamp-2 hidden sm:block">{product.description}</p>
           </div>
-          <div className="flex items-center justify-between mt-4">
-            <span className="text-2xl font-bold bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] bg-clip-text text-transparent">
+          
+          {/* Price and Actions */}
+          <div className="flex items-center justify-between mt-3 gap-2">
+            <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-[#0ea7e0] to-[#5631cf] bg-clip-text text-transparent">
               ${product.price.toFixed(2)}
             </span>
-            <div className="flex gap-2">
+            <div className="flex gap-1 sm:gap-2">
               <button 
                 onClick={handleWishlist}
                 className={`p-2 border rounded-lg transition-colors ${
@@ -86,24 +92,24 @@ const ProductCard = ({ product, viewMode, onQuickView }) => {
                     : 'border-gray-200 hover:border-[#0ea7e0] hover:text-[#0ea7e0]'
                 }`}
               >
-                <Heart size={20} className={isWishlisted ? 'fill-red-500' : ''} />
+                <Heart size={18} className={isWishlisted ? 'fill-red-500' : ''} />
               </button>
               <button 
                 onClick={handleQuickView}
                 className="p-2 border border-gray-200 rounded-lg hover:border-[#0ea7e0] hover:text-[#0ea7e0] transition-colors"
               >
-                <Eye size={20} />
+                <Eye size={18} />
               </button>
               <button 
                 onClick={handleAddToCart}
-                className={`px-4 py-2 rounded-lg transition-all flex items-center gap-2 ${
+                className={`px-3 sm:px-4 py-2 rounded-lg transition-all flex items-center gap-1 sm:gap-2 text-sm sm:text-base ${
                   addedToCart 
                     ? 'bg-green-500 text-white' 
                     : 'gradient-brand text-white hover:opacity-90'
                 }`}
               >
-                {addedToCart ? <Check size={18} /> : <ShoppingCart size={18} />}
-                {addedToCart ? 'Added!' : 'Add to Cart'}
+                {addedToCart ? <Check size={16} /> : <ShoppingCart size={16} />}
+                <span className="hidden sm:inline">{addedToCart ? 'Added!' : 'Add to Cart'}</span>
               </button>
             </div>
           </div>
