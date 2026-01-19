@@ -24,7 +24,7 @@ export const SKINCARE_PRODUCTS = {
       ]
     },
     {
-      id: 'skincare-tools',
+      id: 'tools-accessories',
       name: 'Tools & Accessories',
       products: [
         { id: 'sk-011', name: 'Cellulose Sponge', price: 8.99, description: 'Lightly exfoliates; suitable for all skin types', image: '/products/skincare/sponge.jpg' },
@@ -48,35 +48,45 @@ export const SKINCARE_PRODUCTS = {
         { id: 'sk-023', name: '2-in-1 Electric Jade Roller', price: 49.99, description: 'Vibrating roller for circulation with 2 attachment heads', image: '/products/skincare/electric-jade-2in1.jpg' },
         { id: 'sk-024', name: 'T/U Electric Jade Roller', price: 54.99, description: 'For lymphatic drainage on forehead, cheeks, and jaw', image: '/products/skincare/electric-jade-tu.jpg' },
       ]
-    }
-  ],
-  concerns: [
+    },
+    // By Concern subcategories
     {
       id: 'redness',
       name: 'Redness',
-      products: ['sk-014']
+      products: [
+        { id: 'sk-025', name: 'Ice Globes - Anti-Redness', price: 34.99, description: 'Specifically designed to eliminate redness and calm skin', image: '/products/skincare/ice-globes.jpg' },
+      ]
     },
     {
       id: 'anti-aging',
       name: 'Anti-Aging / Firming',
-      products: ['sk-003', 'sk-004', 'sk-020', 'sk-021', 'sk-022', 'sk-017', 'sk-018', 'sk-019']
+      products: [
+        { id: 'sk-026', name: 'Golden Firming Gel Mask 30ml', price: 29.99, description: 'Focuses on radiance and skin tone', image: '/products/skincare/face-mask-2.jpg' },
+        { id: 'sk-027', name: 'Golden Firming Gel Mask 500ml', price: 99.99, description: 'Focuses on radiance and skin tone - Professional size', image: '/products/skincare/face-mask-2.jpg' },
+        { id: 'sk-028', name: 'Jade Roller - Green', price: 28.99, description: 'Assists with lifting, toning, and contouring', image: '/products/skincare/jade-roller-green.jpg' },
+        { id: 'sk-029', name: 'Jade Roller - Rose Quartz', price: 32.99, description: 'Assists with lifting, toning, and contouring', image: '/products/skincare/jade-roller-rose.jpg' },
+        { id: 'sk-030', name: 'Jade Roller - White', price: 28.99, description: 'Assists with lifting, toning, and contouring', image: '/products/skincare/jade-roller-white.jpg' },
+        { id: 'sk-031', name: 'Gua Sha Stone - Dolphin', price: 24.99, description: 'For anti-aging facial massage', image: '/products/skincare/gua-sha-dolphin.jpg' },
+        { id: 'sk-032', name: 'Gua Sha Stone - Concave', price: 22.99, description: 'For anti-aging facial massage', image: '/products/skincare/gua-sha-concave.jpg' },
+        { id: 'sk-033', name: 'Gua Sha Stone - S Shaped', price: 26.99, description: 'For anti-aging facial massage', image: '/products/skincare/gua-sha-s.jpg' },
+      ]
     },
     {
       id: 'dryness',
       name: 'Dryness',
-      products: ['sk-001', 'sk-002']
-    }
-  ],
-  skinTypes: [
+      products: [
+        { id: 'sk-034', name: 'Hyaluronic Acid Gel Mask 30ml', price: 24.99, description: 'Focuses on suppleness and hydration', image: '/products/skincare/face-mask-1.jpg' },
+        { id: 'sk-035', name: 'Hyaluronic Acid Gel Mask 500ml', price: 89.99, description: 'Focuses on suppleness and hydration - Professional size', image: '/products/skincare/face-mask-1.jpg' },
+      ]
+    },
+    // By Skin Type subcategories
     {
-      id: 'normal',
+      id: 'normal-all-skin-types',
       name: 'Normal / All Skin Types',
-      products: ['sk-011', 'sk-005']
+      products: [
+        { id: 'sk-036', name: 'Cellulose Sponge', price: 8.99, description: 'Explicitly suitable for all skin types', image: '/products/skincare/sponge.jpg' },
+        { id: 'sk-037', name: 'Compressed Dry Sheet Masks', price: 15.99, description: 'Universal application for all skin types', image: '/products/skincare/sheet-mask.jpg' },
+      ]
     }
   ]
 };
-
-
-
-
-

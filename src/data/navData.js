@@ -4,7 +4,7 @@ export const NAV_DATA = [
     name: 'Skincare',
     columns: [
       {
-        title: 'Skincare',
+        title: 'By Category',
         sections: [
           {
             links: [
@@ -45,7 +45,7 @@ export const NAV_DATA = [
     name: 'Spa Products',
     columns: [
       {
-        title: 'Spa Products',
+        title: 'Treatment Products',
         sections: [
           {
             links: [
@@ -85,7 +85,7 @@ export const NAV_DATA = [
     name: 'Nail Products',
     columns: [
       {
-        title: 'Nail Products',
+        title: 'Nail Care',
         sections: [
           {
             links: [
@@ -109,13 +109,11 @@ export const NAV_DATA = [
         ]
       },
       {
-        title: 'Consumables & Disposables',
+        title: 'Consumables',
         sections: [
           {
             links: [
-              { name: 'Nail Wipes', path: '/products/nail-products/nail-wipes' },
-              { name: 'Makeup Wipes & Cotton Pads', path: '/products/nail-products/makeup-wipes-cotton' },
-              { name: 'Pedicure Slippers', path: '/products/nail-products/pedicure-slippers' },
+              { name: 'Consumables & Disposables', path: '/products/nail-products/consumables-disposables' },
             ]
           }
         ]
@@ -138,17 +136,23 @@ export const NAV_DATA = [
             ]
           }
         ]
-      },
+      }
+    ]
+  },
+  {
+    id: 'implements',
+    name: 'Implements',
+    columns: [
       {
-        title: 'Implements',
+        title: 'Hair & Nail Tools',
         sections: [
           {
             links: [
-              { name: 'Hair Tools', path: '/products/equipment/hair-tools' },
-              { name: 'Scissors & Shears (Nail & Cuticle)', path: '/products/equipment/scissors-shears' },
-              { name: 'Skin Tools (Tweezers & Extraction)', path: '/products/equipment/skin-tools' },
-              { name: 'Nail Pushers & Implements', path: '/products/equipment/nail-pushers' },
-              { name: 'Sterilization & Safety', path: '/products/equipment/sterilization' },
+              { name: 'Hair Tools', path: '/products/implements/hair-tools' },
+              { name: 'Scissors & Shears (Nail & Cuticle)', path: '/products/implements/scissors-shears' },
+              { name: 'Skin Tools (Tweezers & Extraction)', path: '/products/implements/skin-tools' },
+              { name: 'Nail Pushers & Implements', path: '/products/implements/nail-pushers' },
+              { name: 'Sterilization & Safety', path: '/products/implements/sterilization' },
             ]
           }
         ]
@@ -158,8 +162,8 @@ export const NAV_DATA = [
         sections: [
           {
             links: [
-              { name: 'Bowls', path: '/products/equipment/bowls' },
-              { name: 'Medical & Treatment Disposables', path: '/products/equipment/medical-disposables' },
+              { name: 'Bowls', path: '/products/implements/bowls' },
+              { name: 'Medical & Treatment Disposables', path: '/products/implements/medical-treatment' },
             ]
           }
         ]
@@ -177,24 +181,7 @@ export const NAV_DATA = [
             links: [
               { name: 'Facial Bed Multipurpose', path: '/products/furniture/facial-bed-multipurpose' },
               { name: 'Facial Massage Bed White / Black', path: '/products/furniture/facial-massage-bed' },
-              { name: 'Portable Massage Bed', path: '/products/furniture/portable-massage-bed' },
-              { name: 'Wooden Trolley', path: '/products/furniture/wooden-trolley' },
-              { name: 'Spa Salon Metal Trolley', path: '/products/furniture/metal-trolley' },
-              { name: 'Glass Trolley', path: '/products/furniture/glass-trolley' },
-            ]
-          }
-        ]
-      },
-      {
-        title: 'More Furniture',
-        sections: [
-          {
-            links: [
-              { name: 'Rolling Tray with Accessories', path: '/products/furniture/rolling-tray' },
-              { name: 'Multi Use Spa Trolley', path: '/products/furniture/spa-trolley' },
-              { name: 'Portable Manicure Table', path: '/products/furniture/manicure-table' },
-              { name: 'Adjustable Stool', path: '/products/furniture/adjustable-stool' },
-              { name: 'Pedicure Foot Rest', path: '/products/furniture/pedicure-foot-rest' },
+              { name: 'Salon Spa Color Rolling Tray with Accessories Holder Cart', path: '/products/furniture/salon-spa-rolling-tray' },
             ]
           }
         ]

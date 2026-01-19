@@ -104,8 +104,3 @@ export const NAIL_PRODUCTS = {
     }
   ]
 };
-
-
-
-
-
