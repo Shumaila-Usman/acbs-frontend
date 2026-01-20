@@ -1,22 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { User, X, LogOut } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
+import { Link } from 'react-router-dom';
+import { User, X } from 'lucide-react';
 import { ACCOUNT_MENU_ITEMS } from '../../data/accountMenuData';
 
 const RegisterDropdown = () => {
-  const { user, isAuthenticated, logout } = useAuth();
-  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
   const dropdownRef = useRef(null);
-
-  const handleLogout = async () => {
-    await logout();
-    setIsOpen(false);
-    setIsMobileDrawerOpen(false);
-    navigate('/login');
-  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -68,13 +58,12 @@ const RegisterDropdown = () => {
     <div
       ref={dropdownRef}
       className="hidden md:block relative"
+      onMouseEnter={() => setIsOpen(true)}
+      onMouseLeave={() => setIsOpen(false)}
     >
-      <button 
-        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 rounded-lg transition-colors"
-        onClick={() => setIsOpen(!isOpen)}
-      >
+      <button className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 rounded-lg transition-colors">
         <User size={20} />
-        <span className="font-medium">{isAuthenticated && user ? user.name.split(' ')[0] : 'Register'}</span>
+        <span className="font-medium">Register</span>
       </button>
 
       {isOpen && (
@@ -82,42 +71,27 @@ const RegisterDropdown = () => {
           {/* Greeting */}
           <div className="px-4 py-4 bg-gradient-to-r from-brand-light/10 to-brand-dark/10">
             <p className="text-lg font-semibold text-gray-900">
-              {isAuthenticated && user ? `Welcome, ${user.name}! 👋` : 'Happy Friday, Beautiful. 🎉'}
+              Happy Friday, Beautiful. 🎉
             </p>
-            {isAuthenticated && user && (
-              <p className="text-sm text-gray-600 mt-1">{user.email}</p>
-            )}
           </div>
 
-          {/* Sign In & Create Account Buttons OR Logout */}
-          {isAuthenticated ? (
-            <div className="px-4 py-4 border-b border-gray-200">
-              <button
-                onClick={handleLogout}
-                className="w-full py-2.5 px-4 flex items-center justify-center gap-2 font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
-              >
-                <LogOut size={20} />
-                Logout
-              </button>
-            </div>
-          ) : (
-            <div className="px-4 py-4 flex gap-3 border-b border-gray-200">
-              <Link
-                to="/login"
-                className="flex-1 py-2.5 px-4 text-center font-semibold border-2 border-black text-black rounded-lg hover:bg-black hover:text-white transition-colors"
-                onClick={() => setIsOpen(false)}
-              >
-                Sign In
-              </Link>
-              <Link
-                to="/register"
-                className="flex-1 py-2.5 px-4 text-center font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
-                onClick={() => setIsOpen(false)}
-              >
-                Create Account
-              </Link>
-            </div>
-          )}
+          {/* Sign In & Create Account Buttons */}
+          <div className="px-4 py-4 flex gap-3 border-b border-gray-200">
+            <Link
+              to="/login"
+              className="flex-1 py-2.5 px-4 text-center font-semibold border-2 border-black text-black rounded-lg hover:bg-black hover:text-white transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              Sign In
+            </Link>
+            <Link
+              to="/register"
+              className="flex-1 py-2.5 px-4 text-center font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
+              onClick={() => setIsOpen(false)}
+            >
+              Create Account
+            </Link>
+          </div>
 
           {/* Menu Items */}
           <div className="py-2 max-h-96 overflow-y-auto">
@@ -140,10 +114,10 @@ const RegisterDropdown = () => {
     <div className="md:hidden">
       <button
         onClick={() => setIsMobileDrawerOpen(true)}
-        className="flex items-center gap-1 p-2 hover:bg-gray-100 rounded-lg transition-colors"
-        aria-label="Account"
+        className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-lg transition-colors"
       >
-        <User size={22} />
+        <User size={20} />
+        <span className="font-medium text-sm">Register</span>
       </button>
 
       {/* Overlay */}
@@ -172,42 +146,27 @@ const RegisterDropdown = () => {
               {/* Greeting */}
               <div className="mb-4 p-4 bg-gradient-to-r from-brand-light/10 to-brand-dark/10 rounded-lg">
                 <p className="text-base font-semibold text-gray-900">
-                  {isAuthenticated && user ? `Welcome, ${user.name}! 👋` : 'Happy Friday, Beautiful. 🎉'}
+                  Happy Friday, Beautiful. 🎉
                 </p>
-                {isAuthenticated && user && (
-                  <p className="text-xs text-gray-600 mt-1">{user.email}</p>
-                )}
               </div>
 
               {/* Buttons */}
-              {isAuthenticated ? (
-                <div className="mb-4">
-                  <button
-                    onClick={handleLogout}
-                    className="w-full py-2.5 px-4 flex items-center justify-center gap-2 font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
-                  >
-                    <LogOut size={20} />
-                    Logout
-                  </button>
-                </div>
-              ) : (
-                <div className="flex flex-col gap-3 mb-4">
-                  <Link
-                    to="/login"
-                    className="py-2.5 px-4 text-center font-semibold border-2 border-black text-black rounded-lg hover:bg-black hover:text-white transition-colors"
-                    onClick={() => setIsMobileDrawerOpen(false)}
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    to="/register"
-                    className="py-2.5 px-4 text-center font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
-                    onClick={() => setIsMobileDrawerOpen(false)}
-                  >
-                    Create Account
-                  </Link>
-                </div>
-              )}
+              <div className="flex flex-col gap-3 mb-4">
+                <Link
+                  to="/login"
+                  className="py-2.5 px-4 text-center font-semibold border-2 border-black text-black rounded-lg hover:bg-black hover:text-white transition-colors"
+                  onClick={() => setIsMobileDrawerOpen(false)}
+                >
+                  Sign In
+                </Link>
+                <Link
+                  to="/register"
+                  className="py-2.5 px-4 text-center font-semibold gradient-brand text-white rounded-lg hover:opacity-90 transition-opacity"
+                  onClick={() => setIsMobileDrawerOpen(false)}
+                >
+                  Create Account
+                </Link>
+              </div>
 
               {/* Menu Items */}
               <div className="border-t border-gray-200 pt-2">

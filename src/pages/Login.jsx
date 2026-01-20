@@ -1,51 +1,23 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import ScrollAnimation from '../components/ScrollAnimation';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
-  const navigate = useNavigate();
-  const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setError('');
-    setLoading(true);
-
-    try {
-      const result = await login(email, password);
-      
-      if (result.success) {
-        navigate('/account');
-      } else {
-        setError(result.message || 'Login failed');
-      }
-    } catch (err) {
-      setError('An error occurred during login');
-    } finally {
-      setLoading(false);
-    }
+    console.log('Login:', { email, password });
   };
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12">
       <div className="max-w-md w-full">
-        <ScrollAnimation animation="scale">
         <div className="bg-white rounded-2xl shadow-xl p-8">
           <h1 className="text-3xl font-bold text-center mb-2 bg-gradient-to-r from-brand-light to-brand-dark bg-clip-text text-transparent">
             Welcome Back
           </h1>
           <p className="text-center text-gray-600 mb-8">Sign in to your account</p>
-
-          {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
-              {error}
-            </div>
-          )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
@@ -56,10 +28,7 @@ const Login = () => {
                 type="email"
                 id="email"
                 value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  setError('');
-                }}
+                onChange={(e) => setEmail(e.target.value)}
                 required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-light focus:border-transparent"
                 placeholder="your@email.com"
@@ -74,10 +43,7 @@ const Login = () => {
                 type="password"
                 id="password"
                 value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  setError('');
-                }}
+                onChange={(e) => setPassword(e.target.value)}
                 required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-light focus:border-transparent"
                 placeholder="Enter your password"
@@ -96,10 +62,9 @@ const Login = () => {
 
             <button
               type="submit"
-              disabled={loading}
-              className="w-full py-3 gradient-brand text-white font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-3 gradient-brand text-white font-semibold rounded-lg hover:opacity-90 transition-opacity"
             >
-              {loading ? 'Signing In...' : 'Sign In'}
+              Sign In
             </button>
           </form>
 
@@ -112,7 +77,6 @@ const Login = () => {
             </p>
           </div>
         </div>
-        </ScrollAnimation>
       </div>
     </div>
   );
